@@ -1,8 +1,11 @@
 package edu.kit.informatik.genkinger.controller;
 
-import edu.kit.informatik.genkinger.controller.Command;
-import edu.kit.informatik.genkinger.controller.Controller;
-
 public interface Action {
+    /**
+     * used as the entry-point
+     *
+     * @param controller reference to a Controller
+     * @param command    command
+     */
     void execute(Controller controller, Command command);
 }

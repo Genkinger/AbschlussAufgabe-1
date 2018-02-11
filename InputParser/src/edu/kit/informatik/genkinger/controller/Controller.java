@@ -2,23 +2,22 @@ package edu.kit.informatik.genkinger.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Controller {
 
-    private Map<CommandPrototype, Action> actionMap;
+    private Map<CommandPrototype, Action> actionMap = new HashMap<>();
     private boolean running;
     private Action defaultCallback;
     private boolean hasDefaultAction;
     private CommandParser parser;
-    private boolean trim;
 
-    Controller(boolean trim) {
-        this.trim = trim;
-        actionMap = new HashMap<>();
-    }
-
+    /**
+     * Attaches an Action to a CommandPrototype
+     *
+     * @param commandPrototype will be attached to Action
+     * @param callback Action to be attached
+     */
     public void attachActionToCommand(CommandPrototype commandPrototype, Action callback) {
         if (actionMap.containsKey(commandPrototype)) {
             return;
@@ -26,25 +25,30 @@ public class Controller {
         actionMap.put(commandPrototype, callback);
     }
 
+    /**
+     * Attaches a default Action that gets called if no other Actions can be matched while running
+     *
+     * @param callback Action to be attached
+     */
     public void attachDefaultAction(Action callback) {
         hasDefaultAction = true;
         defaultCallback = callback;
     }
 
+    /**
+     * Initializes a CommandParser from specified Action-Command mappings and starts the Controller
+     */
     public void start() {
-        parser = new CommandParser(getPrototypeList());
+        parser = new CommandParser(new ArrayList<>(actionMap.keySet()));
         running = true;
         run();
     }
 
+    /**
+     * stops the Controller
+     */
     public void stop() {
         running = false;
-    }
-
-    private List<CommandPrototype> getPrototypeList() {
-        List<CommandPrototype> list = new ArrayList<>();
-        list.addAll(actionMap.keySet());
-        return list;
     }
 
     private void run() {

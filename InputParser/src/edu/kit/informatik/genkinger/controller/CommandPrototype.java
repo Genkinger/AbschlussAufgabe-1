@@ -2,24 +2,44 @@ package edu.kit.informatik.genkinger.controller;
 
 public class CommandPrototype {
     private String command;
-    private CommandParameterDefinition definition;
+    private CommandLayout layout;
 
-    CommandPrototype(String command, CommandParameterDefinition definition) {
+    /**
+     * Constructs a CommandPrototype
+     *
+     * @param command the actual command
+     * @param layout  the layout of the command
+     */
+    CommandPrototype(String command, CommandLayout layout) {
         this.command = command;
-        this.definition = definition;
+        this.layout = layout;
     }
 
-    public CommandParameterDefinition getParameterDefinition() {
-        return definition;
+    /**
+     * @return layout
+     */
+    public CommandLayout getLayout() {
+        return layout;
     }
 
+    /**
+     * @return command
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     * @param o other CommandPrototype object to test equality
+     * @return true if this.command = o.command
+     */
     @Override
     public boolean equals(Object o) {
-        CommandPrototype cp = (CommandPrototype) o;
-        return cp.getCommand().equals(this.command);
+        if (o instanceof CommandPrototype) {
+            CommandPrototype cp = (CommandPrototype) o;
+            return cp.getCommand().equals(this.command);
+        }
+        return false;
     }
+
 }

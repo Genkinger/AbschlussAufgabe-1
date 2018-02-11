@@ -5,12 +5,23 @@ import edu.kit.informatik.Terminal;
 import java.util.List;
 
 public class CommandParser {
-    List<CommandPrototype> prototypes;
 
+    private List<CommandPrototype> prototypes;
+
+    /**
+     * Parses Commands from stdin using the Terminal class
+     *
+     * @param prototypes list of CommandPrototypes that the parser should search for
+     */
     CommandParser(List<CommandPrototype> prototypes) {
         this.prototypes = prototypes;
     }
 
+    /**
+     * waits for user input and tries to parse it accordingly
+     *
+     * @return command (can be invalidated)
+     */
     public Command parseNext() {
         //TODO: refactor if statement to be more readable
 
@@ -21,22 +32,28 @@ public class CommandParser {
         if (parts.length < 1) {
             return command;
         } else {
+
             CommandPrototype prototype = findPrototypeFor(parts[0]);
+
             if (prototype != null) {
+
                 command = new Command(parts[0]);
-                if (prototype.getParameterDefinition().hasParameters()) {
-                    List<CommandParameterType> types = prototype.getParameterDefinition().getParameterList();
+
+                if (prototype.getLayout().hasParameters()) {
+
+                    List<CommandParameterType> types = prototype.getLayout().getParameterList();
 
                     String remainder = line.substring(parts[0].length()).trim();
-                    String[] remainderParts = remainder.split(prototype.getParameterDefinition().getDelimiter());
+                    String[] remainderParts = remainder.split(prototype.getLayout().getDelimiter());
 
                     if (remainderParts.length != types.size()) {
-                        return new Command(parts[0]).invalidate("Invalid number of parameters for '" + parts[0] +"'");
+                        return new Command(parts[0]).invalidate("Invalid number of parameters for '" + parts[0] + "'");
                     }
 
                     int index = 0;
                     for (int i = 0; i < types.size() && index < remainderParts.length; i++) {
                         CommandParameterType type = types.get(i);
+
                         switch (type) {
                             case INT: {
                                 try {
@@ -70,7 +87,7 @@ public class CommandParser {
                     command = new Command(parts[0]);
                 }
             } else {
-                return new Command(parts[0]).invalidate("command not found");
+                return new Command(parts[0]).invalidate("command '" + parts[0] + "' not found");
             }
         }
 
@@ -78,6 +95,7 @@ public class CommandParser {
     }
 
     private CommandPrototype findPrototypeFor(String command) {
+
         for (CommandPrototype p : prototypes) {
             if (p.getCommand().equals(command)) {
                 return p;
