@@ -20,7 +20,6 @@ public class Command {
         return command;
     }
 
-
     public String getStringParameter(int index) throws IndexOutOfBoundsException {
         return strings.get(index);
     }
