@@ -10,7 +10,7 @@ public class CommandPrototype {
      * @param command the actual command
      * @param layout  the layout of the command
      */
-    CommandPrototype(String command, CommandLayout layout) {
+    public CommandPrototype(String command, CommandLayout layout) {
         this.command = command;
         this.layout = layout;
     }

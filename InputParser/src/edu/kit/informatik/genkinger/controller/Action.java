@@ -4,8 +4,8 @@ public interface Action {
     /**
      * used as the entry-point
      *
-     * @param controller reference to a Controller
+     * @param stringInputController reference to a StringInputController
      * @param command    command
      */
-    void execute(Controller controller, Command command);
+    void execute(StringInputController stringInputController, Command command);
 }

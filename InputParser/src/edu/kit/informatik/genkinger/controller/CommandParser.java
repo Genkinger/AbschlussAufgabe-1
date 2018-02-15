@@ -1,5 +1,7 @@
 package edu.kit.informatik.genkinger.controller;
 
+import org.omg.CORBA.DynAnyPackage.Invalid;
+
 import java.util.List;
 
 public class CommandParser {
@@ -25,12 +27,12 @@ public class CommandParser {
     public Command parseNext() {
         //TODO: refactor if statement to be more readable
 
-        Command command = new Command("").invalidate("malformed command");
+        Command command;
 
         String line = inputInterface.readLine();
         String[] parts = line.split("\\s+");
         if (parts.length < 1) {
-            return command;
+            return new Command("").invalidate("Malformed command");
         } else {
 
             CommandPrototype prototype = findPrototypeFor(parts[0]);
@@ -39,19 +41,21 @@ public class CommandParser {
 
                 command = new Command(parts[0]);
 
+                String remainderWithoutTrim = line.substring(parts[0].length());
+                String remainder = remainderWithoutTrim.trim();
+                String[] remainderParts = remainder.split(prototype.getLayout().getDelimiter());
+
                 if (prototype.getLayout().hasParameters()) {
 
                     List<CommandParameterType> types = prototype.getLayout().getParameterList();
 
-                    String remainder = line.substring(parts[0].length()).trim();
-                    String[] remainderParts = remainder.split(prototype.getLayout().getDelimiter());
 
-                    if (remainderParts.length != types.size()) {
+                    if (remainderParts.length != types.size() || (StringUtils.countOccurrencesOf(remainder, prototype.getLayout().getDelimiter()) != types.size() - 1)) {
                         return new Command(parts[0]).invalidate("Invalid number of parameters for '" + parts[0] + "'");
                     }
 
                     int index = 0;
-                    for (int i = 0; i < types.size() && index < remainderParts.length; i++) {
+                    for (int i = 0; i < types.size(); i++) {
                         CommandParameterType type = types.get(i);
 
                         switch (type) {
@@ -61,7 +65,7 @@ public class CommandParser {
                                     command.addIntegerParameter(param);
                                     index++;
                                 } catch (NumberFormatException nfe) {
-                                    return new Command(parts[0]).invalidate("parameter " + index + " invalid for '" + parts[0] + "'");
+                                    return new Command(parts[0]).invalidate("Parameter " + index + " invalid for '" + parts[0] + "'");
                                 }
                             }
                             break;
@@ -77,17 +81,21 @@ public class CommandParser {
                                     command.addFloatParameter(param);
                                     index++;
                                 } catch (NumberFormatException nfe) {
-                                    return new Command(parts[0]).invalidate("parameter " + index + " invalid for '" + parts[0] + "'");
+                                    return new Command(parts[0]).invalidate("Parameter " + index + " invalid for '" + parts[0] + "'");
                                 }
                             }
                             break;
                         }
                     }
                 } else {
-                    command = new Command(parts[0]);
+                    if (remainderWithoutTrim.length() != 0) {
+                        command = new Command(parts[0]).invalidate("Invalid number of parameters for '" + parts[0] + "'");
+                    } else {
+                        command = new Command(parts[0]);
+                    }
                 }
             } else {
-                return new Command(parts[0]).invalidate("command '" + parts[0] + "' not found");
+                return new Command(parts[0]).invalidate("Unknown command '" + parts[0] + "'");
             }
         }
 

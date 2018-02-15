@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Controller {
+public class StringInputController {
 
     private Map<CommandPrototype, Action> actionMap = new HashMap<>();
     private boolean running;
@@ -13,7 +13,12 @@ public class Controller {
     private CommandParser parser;
     private StringInputInterface inputInterface;
 
-    Controller(StringInputInterface inputInterface) {
+    /**
+     * Constructs a controller with the specified StringInputInterface
+     *
+     * @param inputInterface StringInputInterface to use
+     */
+    public StringInputController(StringInputInterface inputInterface) {
         this.inputInterface = inputInterface;
     }
 
@@ -41,7 +46,7 @@ public class Controller {
     }
 
     /**
-     * Initializes a CommandParser from specified Action-Command mappings and starts the Controller
+     * Initializes a CommandParser from specified Action-Command mappings and starts the StringInputController
      */
     public void start() {
         parser = new CommandParser(new ArrayList<>(actionMap.keySet()), inputInterface);
@@ -50,7 +55,7 @@ public class Controller {
     }
 
     /**
-     * stops the Controller
+     * stops the StringInputController
      */
     public void stop() {
         running = false;

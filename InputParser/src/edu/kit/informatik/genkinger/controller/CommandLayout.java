@@ -12,7 +12,7 @@ public class CommandLayout {
     /**
      * Constructs a CommandLayout with the default delimiter (";")
      */
-    CommandLayout() {
+    public CommandLayout() {
 
     }
 
@@ -21,7 +21,7 @@ public class CommandLayout {
      *
      * @param delimiter separates parameters
      */
-    CommandLayout(String delimiter) {
+    public CommandLayout(String delimiter) {
         this.delimiter = delimiter;
     }
 
