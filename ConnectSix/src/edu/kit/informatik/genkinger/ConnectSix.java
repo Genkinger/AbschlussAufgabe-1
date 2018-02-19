@@ -6,15 +6,15 @@ public class ConnectSix {
 
 
     private StringInputController inputController;
-    private StringInputInterface inputInterface;
     private StringOutputInterface outputInterface;
 
     private GameBoard gameBoard;
     private int currentPlayerIndex;
     private PlayerMark[] activePlayers;
 
+
+
     ConnectSix(GameBoardSize gameBoardSize, GameBoardType gameBoardType, PlayerMark maxPlayer, StringInputInterface inputInterface, StringOutputInterface outputInterface) {
-        this.inputInterface = inputInterface;
         this.outputInterface = outputInterface;
 
         CommandPrototype quit = new CommandPrototype("quit", new CommandLayout());
@@ -91,11 +91,21 @@ public class ConnectSix {
     }
 
     private void printColumn(int col) {
-        printMarks(gameBoard.getColumn(col));
+        PlayerMark[] colmarks = gameBoard.getColumn(col);
+        if (colmarks == null) {
+            outputInterface.printError("Invalid column");
+            return;
+        }
+        printMarks(colmarks);
     }
 
     private void printRow(int row) {
-        printMarks(gameBoard.getRow(row));
+        PlayerMark[] rowmarks = gameBoard.getRow(row);
+        if (rowmarks == null) {
+            outputInterface.printError("Invalid row");
+            return;
+        }
+        printMarks(rowmarks);
     }
 
     private void resetGame() {
@@ -141,8 +151,66 @@ public class ConnectSix {
     }
 
     private PlayerMark determineWinner() {
-        //TODO: implement
-        PlayerMark[][] board = gameBoard.getBoard();
+
+        int size = gameBoard.getBoard().length;
+        PlayerMark winner;
+
+        for (int i = 0; i < size; i++) {
+            winner = checkLane(gameBoard.getRow(i));
+            if (winner != PlayerMark.NONE) {
+                return winner;
+            }
+        }
+
+        for (int i = 0; i < size; i++) {
+            winner = checkLane(gameBoard.getColumn(i));
+            if (winner != PlayerMark.NONE) {
+                return winner;
+            }
+        }
+
+        for (int i = 0; i < (size * 2 - 1); i++) {
+            winner = checkLane(gameBoard.getDiagonalRL(i));
+            if (winner != PlayerMark.NONE) {
+                return winner;
+            }
+        }
+
+        for (int i = 0; i < (size * 2 - 1); i++) {
+            winner = checkLane(gameBoard.getDiagonalLR(i));
+            if (winner != PlayerMark.NONE) {
+                return winner;
+            }
+        }
+
+        return PlayerMark.NONE;
+    }
+
+    private PlayerMark checkLane(PlayerMark[] marks) {
+        int count = 0;
+
+        PlayerMark current = PlayerMark.NONE;
+        int size = gameBoard.getGameBoardType() == GameBoardType.STANDARD ? marks.length : marks.length * 2;
+
+
+        for (int j = 0; j < size; j++) {
+            int index = j % marks.length;
+
+            if (marks[index] == PlayerMark.NONE) {
+                count = 0;
+                current = PlayerMark.NONE;
+            } else {
+                if (current == marks[index]) {
+                    count++;
+                    if (count == 6) {
+                        return current;
+                    }
+                } else {
+                    count = 1;
+                }
+                current = marks[index];
+            }
+        }
 
 
         return PlayerMark.NONE;

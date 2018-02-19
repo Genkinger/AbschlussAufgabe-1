@@ -31,7 +31,7 @@ public class GameBoard {
         if (conv_row == -1) {
             return null;
         }
-        return board[row];
+        return board[conv_row];
     }
 
     public PlayerMark[] getColumn(int col) {
@@ -69,7 +69,7 @@ public class GameBoard {
 
     private int convertCoordinate(int value) {
         if (gameBoardType == GameBoardType.TORUS) {
-            return value % board.length;
+            return (value % board.length + board.length) % board.length;
         } else {
             if (Utils.inRange(value, 0, board.length - 1)) {
                 return value;
@@ -87,6 +87,67 @@ public class GameBoard {
         } else {
             return board[conv_row][conv_col];
         }
+    }
+
+    public GameBoardType getGameBoardType() {
+        return gameBoardType;
+    }
+
+    public PlayerMark[] getDiagonalLR(int i) {
+
+        if (!Utils.inRange(i, 0, 2 * board.length - 1)) {
+            return null;
+        }
+
+        int size;
+
+        if (i < board.length) {
+            size = i + 1;
+        } else {
+            size = board.length - (i - board.length) - 1;
+        }
+        PlayerMark[] marks = new PlayerMark[size];
+
+        for (int j = 0; j < size; j++) {
+            if (i < board.length) {
+                int index = board.length - (size - j);
+                marks[j] = board[index][j];
+            } else {
+                int index = board.length - (size - j);
+                marks[j] = board[j][index];
+            }
+        }
+
+        return marks;
+    }
+
+    public PlayerMark[] getDiagonalRL(int i) {
+
+        if (!Utils.inRange(i, 0, 2 * board.length - 1)) {
+            return null;
+        }
+
+        int size;
+
+        if (i < board.length) {
+            size = i + 1;
+        } else {
+            size = board.length - (i - board.length) - 1;
+        }
+
+        PlayerMark[] marks = new PlayerMark[size];
+
+        for (int j = 0; j < size; j++) {
+            if (i < board.length) {
+                int index  = size - 1 - j;
+                marks[j] = board[j][index];
+            } else {
+                int index = size - j;
+                marks[j] = board[j+1][index];
+            }
+        }
+
+        return marks;
     }
 
     @Override
