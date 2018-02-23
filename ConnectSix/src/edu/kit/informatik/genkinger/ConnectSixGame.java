@@ -2,7 +2,11 @@ package edu.kit.informatik.genkinger;
 
 import edu.kit.informatik.genkinger.controller.*;
 
-public class ConnectSix {
+
+/**
+ *
+ */
+public class ConnectSixGame {
 
 
     private StringInputController inputController;
@@ -11,10 +15,21 @@ public class ConnectSix {
     private GameBoard gameBoard;
     private int currentPlayerIndex;
     private PlayerMark[] activePlayers;
+    private boolean gameOver;
 
-
-
-    ConnectSix(GameBoardSize gameBoardSize, GameBoardType gameBoardType, PlayerMark maxPlayer, StringInputInterface inputInterface, StringOutputInterface outputInterface) {
+    /**
+     * Constructs a ConnectSixGame with a {@link GameBoardSize}, a {@link GameBoardType},
+     * a {@link PlayerMark} representing the last active Player, a {@link StringInputInterface}
+     * and a {@link StringOutputInterface}.
+     *
+     * @param gameBoardSize   the size of the board
+     * @param gameBoardType   the type of the board
+     * @param maxPlayer       the PlayerMark representing the last active player
+     * @param inputInterface  the StringInputInterface to use (should be TerminalWrapper)
+     * @param outputInterface the StringOutputInterface to use (should be TerminalWrapper)
+     */
+    ConnectSixGame(GameBoardSize gameBoardSize, GameBoardType gameBoardType, PlayerMark maxPlayer,
+                   StringInputInterface inputInterface, StringOutputInterface outputInterface) {
         this.outputInterface = outputInterface;
 
         CommandPrototype quit = new CommandPrototype("quit", new CommandLayout());
@@ -60,20 +75,28 @@ public class ConnectSix {
 
         switch (maxPlayer) {
             case TWO:
-                this.activePlayers = new PlayerMark[]{PlayerMark.ONE, PlayerMark.TWO};
+                this.activePlayers
+                        = new PlayerMark[]{PlayerMark.ONE, PlayerMark.TWO};
                 break;
             case THREE:
-                this.activePlayers = new PlayerMark[]{PlayerMark.ONE, PlayerMark.TWO, PlayerMark.THREE};
+                this.activePlayers
+                        = new PlayerMark[]{PlayerMark.ONE, PlayerMark.TWO, PlayerMark.THREE};
                 break;
             case FOUR:
-                this.activePlayers = new PlayerMark[]{PlayerMark.ONE, PlayerMark.TWO, PlayerMark.THREE, PlayerMark.FOUR};
+                this.activePlayers
+                        = new PlayerMark[]{PlayerMark.ONE, PlayerMark.TWO, PlayerMark.THREE, PlayerMark.FOUR};
                 break;
             default:
                 //TODO: error
                 break;
         }
+
+        this.gameOver = false;
     }
 
+    /**
+     * Starts the associated <code>StringInputController</code> (i.e. the game)
+     */
     public void start() {
         inputController.start();
     }
@@ -119,24 +142,31 @@ public class ConnectSix {
         PlayerMark cell1 = gameBoard.getCell(row1, col1);
         PlayerMark cell2 = gameBoard.getCell(row2, col2);
 
-        if (cell1 == null ||
-                cell2 == null ||
-                cell1 != PlayerMark.NONE ||
-                cell2 != PlayerMark.NONE ||
-                (row1 == row2 && col1 == col2)) {
-            outputInterface.printError("Invalid move");
+        if (cell1 == null
+                || cell2 == null
+                || cell1 != PlayerMark.NONE
+                || cell2 != PlayerMark.NONE
+                || (row1 == row2 && col1 == col2)
+                || gameOver) {
+            outputInterface.printError("Invalid move ");
         } else {
 
-            //TODO: even if unneccessary maybe check for errors anyway
+            //TODO: maybe error check here (prob. unneccessary)
             gameBoard.place(row1, col1, player);
             gameBoard.place(row2, col2, player);
 
             PlayerMark winner = determineWinner();
             if (winner == PlayerMark.NONE) {
-                ok();
-                nextPlayer();
+                if (gameBoard.isFull()) {
+                    outputInterface.printLine("draw");
+                    gameOver = true;
+                } else {
+                    ok();
+                    nextPlayer();
+                }
             } else {
                 outputInterface.printLine(winner.toString() + " wins");
+                gameOver = true;
             }
         }
     }

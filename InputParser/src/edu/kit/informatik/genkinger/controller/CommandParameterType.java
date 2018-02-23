@@ -1,16 +1,26 @@
 package edu.kit.informatik.genkinger.controller;
 
 /**
- * parameter types
+ * This enum contains the currently supported parameter types for commands.
+ *
+ * @author Lukas Genkinger
+ * @see CommandPrototype
+ * @see CommandLayout
  */
 public enum CommandParameterType {
 
-    /** type: String*/
+    /**
+     * Type: String
+     */
     STRING,
 
-    /** type: int*/
+    /**
+     * Type: Integer
+     */
     INT,
 
-    /** type: float*/
+    /**
+     * Type: Float
+     */
     FLOAT
 }

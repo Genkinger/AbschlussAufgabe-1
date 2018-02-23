@@ -1,11 +1,15 @@
 package edu.kit.informatik.genkinger;
 
 public class Main {
-
+    /**
+     * Entry point
+     *
+     * @param args the commandline args
+     */
     public static void main(String[] args) {
 
 
-        ConnectSix six = ConnectSixBuilder.build(args);
+        ConnectSixGame six = ConnectSixBuilder.build(args);
 
         if (six != null) {
 
