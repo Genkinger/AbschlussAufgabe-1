@@ -1,4 +1,4 @@
-package edu.kit.informatik.genkinger;
+package edu.kit.informatik.genkinger.connectsix;
 
 
 /**
@@ -10,23 +10,23 @@ package edu.kit.informatik.genkinger;
  */
 public enum PlayerMark {
     /**
-     *
+     * Player one
      */
     ONE,
     /**
-     *
+     * Player two
      */
     TWO,
     /**
-     *
+     * Player three
      */
     THREE,
     /**
-     *
+     * Player four
      */
     FOUR,
     /**
-     *
+     * Used for marking empty cells on a {@link GameBoard}
      */
     NONE;
 

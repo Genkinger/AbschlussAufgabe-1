@@ -1,5 +1,7 @@
 package edu.kit.informatik.genkinger.controller;
 
+import edu.kit.informatik.StringUtils;
+
 import java.util.List;
 
 /**
@@ -30,13 +32,13 @@ public class CommandParser {
     }
 
     /**
-     * Parses inputs that are read in via the Parsers {@link StringInputInterface}.
+     * Parses inputs that are read in via the {@link StringInputInterface}.
      * This method blocks until input is available.
      *
      * @return a {@link Command} if the read input is a valid command.
      * The {@link Command} is invalidated with {@link Command#invalidate(String)} otherwise
      */
-    public Command parseNext() {
+    public Command nextCommand() {
         //TODO: split this into multiple mehtod calls
 
         Command command;

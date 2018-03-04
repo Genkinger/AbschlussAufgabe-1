@@ -1,4 +1,6 @@
-package edu.kit.informatik.genkinger;
+package edu.kit.informatik.genkinger.connectsix;
+
+import edu.kit.informatik.genkinger.Utils;
 
 /**
  * This class represents the GameBoard of a {@link ConnectSixGame}
@@ -153,10 +155,10 @@ public class GameBoard {
      * Range: <code>0 < i < 2 * board.length</code>
      *
      * @param i the index of the diagonal
-     * @return a {@link PlayerMark} array representing the diagonal.
+     * @return a {@link PlayerMark} array representing the diagonal at index <code>i</code>.
      * <code>null</code> if <code>i</code> is invalid.
      */
-    public PlayerMark[] getDiagonalLR(int i) {
+    public PlayerMark[] getDiagonalTopDown(int i) {
 
         if (!Utils.inRange(i, 0, 2 * board.length - 1)) {
             return null;
@@ -172,11 +174,10 @@ public class GameBoard {
         PlayerMark[] marks = new PlayerMark[size];
 
         for (int j = 0; j < size; j++) {
+            int index = board.length - (size - j);
             if (i < board.length) {
-                int index = board.length - (size - j);
                 marks[j] = board[index][j];
             } else {
-                int index = board.length - (size - j);
                 marks[j] = board[j][index];
             }
         }
@@ -185,15 +186,15 @@ public class GameBoard {
     }
 
     /**
-     * Returns a {@link PlayerMark} array representing the diagonal (top-right -> bot-left) with index <code>i</code>.
-     * Indices from right to left.
+     * Returns a {@link PlayerMark} array representing the diagonal (bot-left -> top-right) with index <code>i</code>.
+     * Indices from left to right.
      * Range: <code>0 < i < 2 * board.length</code>
      *
      * @param i the index of the diagonal
      * @return a {@link PlayerMark} array representing the diagonal.
-     * <code>null</code> if <code>i</code> is invalid.
+     *<code>null</code> if <code>i</code> is invalid.
      */
-    public PlayerMark[] getDiagonalRL(int i) {
+    public PlayerMark[] getDiagonalBottomUp(int i) {
 
         if (!Utils.inRange(i, 0, 2 * board.length - 1)) {
             return null;
@@ -214,8 +215,9 @@ public class GameBoard {
                 int index = size - 1 - j;
                 marks[j] = board[j][index];
             } else {
-                int index = size - j;
-                marks[j] = board[j + 1][index];
+                int indexRow = (i - (board.length - 1)) + j;
+                int indexCol = board.length - 1 - j;
+                marks[j] = board[indexRow][indexCol];
             }
         }
 
@@ -230,7 +232,7 @@ public class GameBoard {
     public boolean isFull() {
         int count = 0;
 
-        //TODO: this is sort of inefficient ...
+        //TODO: this is inefficient ...
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == PlayerMark.NONE) {
@@ -238,25 +240,20 @@ public class GameBoard {
                 }
             }
         }
-
-        if (count == 0) {
-            return true;
-        }
-        return false;
+        return (count == 0);
     }
 
     @Override
     public String toString() {
-        String str = "";
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                str += board[i][j].toString() + " ";
-
+                stringBuilder.append(board[i][j].toString()).append(" ");
             }
-            str += "\n";
+            stringBuilder.append("\n");
         }
 
-        return str.trim();
+        return stringBuilder.toString().trim();
     }
 }

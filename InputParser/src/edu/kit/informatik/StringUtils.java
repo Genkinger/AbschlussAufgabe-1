@@ -1,4 +1,4 @@
-package edu.kit.informatik.genkinger.controller;
+package edu.kit.informatik;
 
 /**
  * This class is used as a "namespace" for static methods involving Strings.

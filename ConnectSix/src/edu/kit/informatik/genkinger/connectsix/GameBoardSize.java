@@ -1,4 +1,4 @@
-package edu.kit.informatik.genkinger;
+package edu.kit.informatik.genkinger.connectsix;
 
 /**
  * This enum represents the size of a {@link GameBoard}.

@@ -1,10 +1,17 @@
-package edu.kit.informatik.genkinger;
+package edu.kit.informatik.genkinger.connectsix;
 
+import edu.kit.informatik.genkinger.Utils;
 import edu.kit.informatik.genkinger.controller.*;
+
+import java.util.Arrays;
 
 
 /**
+ * This class implements the game "ConnectSix" and its logic.
+ * It uses a {@link StringInputController} to get user input (usually from stdin).
  *
+ * @see StringInputController
+ * @see GameBoard
  */
 public class ConnectSixGame {
 
@@ -134,6 +141,7 @@ public class ConnectSixGame {
     private void resetGame() {
         gameBoard.reset();
         currentPlayerIndex = 0;
+        gameOver = false;
         ok();
     }
 
@@ -151,9 +159,10 @@ public class ConnectSixGame {
             outputInterface.printError("Invalid move ");
         } else {
 
-            //TODO: maybe error check here (prob. unneccessary)
+            //TODO: Error checking (unneccessary ?)
             gameBoard.place(row1, col1, player);
             gameBoard.place(row2, col2, player);
+
 
             PlayerMark winner = determineWinner();
             if (winner == PlayerMark.NONE) {
@@ -199,17 +208,66 @@ public class ConnectSixGame {
             }
         }
 
-        for (int i = 0; i < (size * 2 - 1); i++) {
-            winner = checkLane(gameBoard.getDiagonalRL(i));
-            if (winner != PlayerMark.NONE) {
-                return winner;
+        if (gameBoard.getGameBoardType() == GameBoardType.STANDARD) {
+            for (int i = 0; i < (size * 2 - 1); i++) {
+                winner = checkLane(gameBoard.getDiagonalBottomUp(i));
+                if (winner != PlayerMark.NONE) {
+                    return winner;
+                }
             }
-        }
 
-        for (int i = 0; i < (size * 2 - 1); i++) {
-            winner = checkLane(gameBoard.getDiagonalLR(i));
-            if (winner != PlayerMark.NONE) {
-                return winner;
+            for (int i = 0; i < (size * 2 - 1); i++) {
+                winner = checkLane(gameBoard.getDiagonalTopDown(i));
+                if (winner != PlayerMark.NONE) {
+                    return winner;
+                }
+            }
+            //NOTE: THIS IS VERY HACKY / BUGGY CODE!
+        } else {
+            for (int i = 0; i < (size * 2 - 1); i++) {
+                PlayerMark[] first;
+                PlayerMark[] second;
+                PlayerMark[] diag;
+
+                if (i < size) {
+                    first = gameBoard.getDiagonalTopDown(i);
+                    second = gameBoard.getDiagonalTopDown(i + size);
+                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                } else if (i == size) {
+                    diag = gameBoard.getDiagonalTopDown(i);
+                } else {
+                    first = gameBoard.getDiagonalTopDown(i);
+                    second = gameBoard.getDiagonalTopDown(i - size);
+                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                }
+
+                winner = checkLane(diag);
+                if (winner != PlayerMark.NONE) {
+                    return winner;
+                }
+            }
+
+            for (int i = 0; i < (size * 2 - 1); i++) {
+                PlayerMark[] first;
+                PlayerMark[] second;
+                PlayerMark[] diag;
+
+                if (i < size) {
+                    first = gameBoard.getDiagonalBottomUp(i);
+                    second = gameBoard.getDiagonalBottomUp(i + size);
+                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                } else if (i == size) {
+                    diag = gameBoard.getDiagonalBottomUp(i);
+                } else {
+                    first = gameBoard.getDiagonalBottomUp(i);
+                    second = gameBoard.getDiagonalBottomUp(i - size);
+                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                }
+
+                winner = checkLane(diag);
+                if (winner != PlayerMark.NONE) {
+                    return winner;
+                }
             }
         }
 

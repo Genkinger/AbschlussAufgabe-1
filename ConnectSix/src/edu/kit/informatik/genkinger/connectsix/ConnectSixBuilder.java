@@ -1,4 +1,4 @@
-package edu.kit.informatik.genkinger;
+package edu.kit.informatik.genkinger.connectsix;
 
 import edu.kit.informatik.genkinger.controller.StringOutputInterface;
 import edu.kit.informatik.genkinger.controller.TerminalWrapper;
@@ -76,9 +76,9 @@ public class ConnectSixBuilder {
 
     private static void printUsage(StringOutputInterface outputInterface) {
         outputInterface.printError("Invalid arguments\n\n"
-                + "Usage: ConnectSixGame [type] [n] [players]\n"
-                + "\ttype: torus or standard [String]\n"
-                + "\tn: size n x n of the board (18 or 20) [Integer]\n"
-                + "\tplayers: number of players (2, 3 or 4) [Integer]");
+                + "Usage: ConnectSixGame type n players\n"
+                + "\ttype: torus or standard \n"
+                + "\tn: size of the N x N gameboard (18 or 20)\n"
+                + "\tplayers: number of players (2, 3 or 4)");
     }
 }

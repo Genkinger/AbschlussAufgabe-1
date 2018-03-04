@@ -1,5 +1,8 @@
 package edu.kit.informatik.genkinger;
 
+import edu.kit.informatik.genkinger.connectsix.ConnectSixBuilder;
+import edu.kit.informatik.genkinger.connectsix.ConnectSixGame;
+
 public class Main {
     /**
      * Entry point
@@ -12,9 +15,7 @@ public class Main {
         ConnectSixGame six = ConnectSixBuilder.build(args);
 
         if (six != null) {
-
             six.start();
-
         }
     }
 
