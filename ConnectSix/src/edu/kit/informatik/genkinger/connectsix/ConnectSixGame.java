@@ -3,8 +3,6 @@ package edu.kit.informatik.genkinger.connectsix;
 import edu.kit.informatik.genkinger.Utils;
 import edu.kit.informatik.genkinger.controller.*;
 
-import java.util.Arrays;
-
 
 /**
  * This class implements the game "ConnectSix" and its logic.
@@ -191,22 +189,28 @@ public class ConnectSixGame {
 
     private PlayerMark determineWinner() {
 
-        int size = gameBoard.getBoard().length;
         PlayerMark winner;
 
-        for (int i = 0; i < size; i++) {
-            winner = checkLane(gameBoard.getRow(i));
-            if (winner != PlayerMark.NONE) {
-                return winner;
-            }
+
+        winner = determineWinnerHorizVert();
+
+        if (winner != PlayerMark.NONE) {
+            return winner;
         }
 
-        for (int i = 0; i < size; i++) {
-            winner = checkLane(gameBoard.getColumn(i));
-            if (winner != PlayerMark.NONE) {
-                return winner;
-            }
+        winner = determineWinnerDiagonal();
+
+        if (winner != PlayerMark.NONE) {
+            return winner;
         }
+
+        return PlayerMark.NONE;
+    }
+
+    private PlayerMark determineWinnerDiagonal() {
+
+        PlayerMark winner;
+        int size = gameBoard.getBoard().length;
 
         if (gameBoard.getGameBoardType() == GameBoardType.STANDARD) {
             for (int i = 0; i < (size * 2 - 1); i++) {
@@ -222,7 +226,6 @@ public class ConnectSixGame {
                     return winner;
                 }
             }
-            //NOTE: THIS IS VERY HACKY / BUGGY CODE!
         } else {
             for (int i = 0; i < (size * 2 - 1); i++) {
                 PlayerMark[] first;
@@ -232,13 +235,13 @@ public class ConnectSixGame {
                 if (i < size) {
                     first = gameBoard.getDiagonalTopDown(i);
                     second = gameBoard.getDiagonalTopDown(i + size);
-                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                    diag = concatenateArrays(first, second);
                 } else if (i == size) {
                     diag = gameBoard.getDiagonalTopDown(i);
                 } else {
                     first = gameBoard.getDiagonalTopDown(i);
                     second = gameBoard.getDiagonalTopDown(i - size);
-                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                    diag = concatenateArrays(first, second);
                 }
 
                 winner = checkLane(diag);
@@ -255,13 +258,13 @@ public class ConnectSixGame {
                 if (i < size) {
                     first = gameBoard.getDiagonalBottomUp(i);
                     second = gameBoard.getDiagonalBottomUp(i + size);
-                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                    diag = concatenateArrays(first, second);
                 } else if (i == size) {
                     diag = gameBoard.getDiagonalBottomUp(i);
                 } else {
                     first = gameBoard.getDiagonalBottomUp(i);
                     second = gameBoard.getDiagonalBottomUp(i - size);
-                    diag = (PlayerMark[]) Utils.concatenateArrays(first, second);
+                    diag = concatenateArrays(first, second);
                 }
 
                 winner = checkLane(diag);
@@ -270,7 +273,26 @@ public class ConnectSixGame {
                 }
             }
         }
+        return PlayerMark.NONE;
+    }
 
+    private PlayerMark determineWinnerHorizVert() {
+        PlayerMark winner;
+        int size = gameBoard.getBoard().length;
+
+        for (int i = 0; i < size; i++) {
+            winner = checkLane(gameBoard.getRow(i));
+            if (winner != PlayerMark.NONE) {
+                return winner;
+            }
+        }
+
+        for (int i = 0; i < size; i++) {
+            winner = checkLane(gameBoard.getColumn(i));
+            if (winner != PlayerMark.NONE) {
+                return winner;
+            }
+        }
         return PlayerMark.NONE;
     }
 
@@ -312,6 +334,26 @@ public class ConnectSixGame {
             outputInterface.printLine(cell.toString());
         }
     }
+
+    private PlayerMark[] concatenateArrays(PlayerMark[] first, PlayerMark[] second) {
+
+        if (first == null || second == null) {
+            return null;
+        }
+
+        PlayerMark[] retval = new PlayerMark[first.length + second.length];
+
+        for (int i = 0; i < retval.length; i++) {
+            if (i < first.length) {
+                retval[i] = first[i];
+            } else {
+                retval[i] = second[i - first.length];
+            }
+        }
+
+        return retval;
+    }
+
 
 }
 

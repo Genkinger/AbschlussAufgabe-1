@@ -116,6 +116,7 @@ public class CommandParser {
         return command;
     }
 
+
     private CommandPrototype findPrototypeFor(String command) {
 
         for (CommandPrototype p : prototypes) {

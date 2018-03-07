@@ -23,32 +23,6 @@ public class Utils {
     }
 
 
-    /**
-     * Returns a new <code>PlayerMark[]</code> representing the concatenation of <code>first</code> with <code>second</code>
-     *
-     * @param first  the first array in the concatenation
-     * @param second the second array in the concatenation
-     * @return a new <code>PlayerMark[]</code> representing the concatenation
-     * of <code>first</code> with <code>second</code>.
-     * <code>null</code> if one or both of the input arrays are <code>null</code>
-     */
-    public static PlayerMark[] concatenateArrays(PlayerMark[] first, PlayerMark[] second) {
 
-        if (first == null || second == null) {
-            return null;
-        }
-
-        PlayerMark[] retval = new PlayerMark[first.length + second.length];
-
-        for (int i = 0; i < retval.length; i++) {
-            if (i < first.length) {
-                retval[i] = first[i];
-            } else {
-                retval[i] = second[i - first.length];
-            }
-        }
-
-        return retval;
-    }
 
 }
