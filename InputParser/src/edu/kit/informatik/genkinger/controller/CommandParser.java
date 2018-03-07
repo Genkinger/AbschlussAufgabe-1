@@ -1,6 +1,6 @@
 package edu.kit.informatik.genkinger.controller;
 
-import edu.kit.informatik.StringUtils;
+import edu.kit.informatik.genkinger.StringUtils;
 
 import java.util.List;
 

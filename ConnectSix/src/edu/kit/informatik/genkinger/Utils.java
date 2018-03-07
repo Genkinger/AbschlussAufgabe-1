@@ -1,6 +1,5 @@
 package edu.kit.informatik.genkinger;
 
-import edu.kit.informatik.genkinger.connectsix.PlayerMark;
 
 /**
  * This class is intended as a "namespace" for utility methods.

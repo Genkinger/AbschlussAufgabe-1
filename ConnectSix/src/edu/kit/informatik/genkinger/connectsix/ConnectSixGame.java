@@ -1,6 +1,5 @@
 package edu.kit.informatik.genkinger.connectsix;
 
-import edu.kit.informatik.genkinger.Utils;
 import edu.kit.informatik.genkinger.controller.*;
 
 
