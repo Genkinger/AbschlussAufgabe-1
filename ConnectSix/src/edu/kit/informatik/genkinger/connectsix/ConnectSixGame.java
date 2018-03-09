@@ -99,7 +99,7 @@ public class ConnectSixGame {
     }
 
     /**
-     * Starts the associated <code>StringInputController</code> (i.e. the game)
+     * Starts the associated {@link StringInputController} (i.e. the game)
      */
     void start() {
         inputController.start();
@@ -156,7 +156,6 @@ public class ConnectSixGame {
             outputInterface.printError("Invalid move ");
         } else {
 
-            //TODO: Error checking (unneccessary ?)
             gameBoard.place(row1, col1, player);
             gameBoard.place(row2, col2, player);
 
