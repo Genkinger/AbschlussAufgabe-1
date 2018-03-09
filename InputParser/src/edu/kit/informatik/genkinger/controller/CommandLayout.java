@@ -51,7 +51,7 @@ public class CommandLayout {
      *
      * @return the list of {@link CommandParameterType}s in the layout
      */
-    public List<CommandParameterType> getParameterList() {
+    List<CommandParameterType> getParameterList() {
         return parameters;
     }
 
@@ -61,7 +61,7 @@ public class CommandLayout {
      *
      * @return <code>true</code> if any parameters were added
      */
-    public boolean hasParameters() {
+    boolean hasParameters() {
         return hasParameters;
     }
 
@@ -70,7 +70,7 @@ public class CommandLayout {
      *
      * @return the specified delimiter
      */
-    public String getDelimiter() {
+    String getDelimiter() {
         return delimiter;
     }
 }

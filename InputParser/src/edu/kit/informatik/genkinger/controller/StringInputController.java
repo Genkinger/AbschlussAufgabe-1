@@ -80,7 +80,7 @@ public class StringInputController {
     private void run() {
         while (running) {
 
-            Command command = parser.nextCommand();
+            Command command = parser.next(); //parser.nextCommand();
             if (!command.isValid()) {
                 if (hasDefaultAction) {
                     defaultCallback.execute(this, command);

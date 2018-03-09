@@ -101,7 +101,7 @@ public class ConnectSixGame {
     /**
      * Starts the associated <code>StringInputController</code> (i.e. the game)
      */
-    public void start() {
+    void start() {
         inputController.start();
     }
 

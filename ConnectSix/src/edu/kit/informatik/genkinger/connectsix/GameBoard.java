@@ -34,7 +34,7 @@ public class GameBoard {
     /**
      * Resets the board (i.e. sets all {@link PlayerMark}s to <code>PlayerMark.NONE</code>).
      */
-    public void reset() {
+    void reset() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 board[i][j] = PlayerMark.NONE;
@@ -49,7 +49,7 @@ public class GameBoard {
      * @return a {@link PlayerMark} array representing the specified row <code>row</code>.
      * <code>null</code> if <code>row</code> is invalid.
      */
-    public PlayerMark[] getRow(int row) {
+    PlayerMark[] getRow(int row) {
         int convRow = convertCoordinate(row);
         if (convRow == -1) {
             return null;
@@ -64,7 +64,7 @@ public class GameBoard {
      * @return a {@link PlayerMark} array representing the specified column <code>col</code>.
      * <code>null</code> if <code>col</code> is invalid.
      */
-    public PlayerMark[] getColumn(int col) {
+    PlayerMark[] getColumn(int col) {
         int convCol = convertCoordinate(col);
         if (convCol == -1) {
             return null;
@@ -82,7 +82,7 @@ public class GameBoard {
      *
      * @return the two-dimensional {@link PlayerMark} array that represents the board
      */
-    public PlayerMark[][] getBoard() {
+    PlayerMark[][] getBoard() {
         return board;
     }
 
@@ -92,22 +92,20 @@ public class GameBoard {
      * @param row  the index of the row
      * @param col  the index of the col
      * @param mark the mark to set the specified "cell" to
-     * @return <code>true</code> if the specified "cell" was marked with <code>PlayerMark.NONE</code>
      */
-    public boolean place(int row, int col, PlayerMark mark) {
+    void place(int row, int col, PlayerMark mark) {
         int convCol = convertCoordinate(col);
         int convRow = convertCoordinate(row);
 
         if (convCol == -1 || convRow == -1) {
-            return false;
+            return;
         }
 
         if (board[convRow][convCol] != PlayerMark.NONE) {
-            return false;
+            return;
         }
 
         board[convRow][convCol] = mark;
-        return true;
     }
 
     private int convertCoordinate(int value) {
@@ -130,7 +128,7 @@ public class GameBoard {
      * @return the specified "cell" at row <code>row</code>, column <code>col</code>.
      * <code>null</code> if the indices are invalid.
      */
-    public PlayerMark getCell(int row, int col) {
+    PlayerMark getCell(int row, int col) {
         int convRow = convertCoordinate(row);
         int convCol = convertCoordinate(col);
         if (convCol == -1 || convRow == -1) {
@@ -145,7 +143,7 @@ public class GameBoard {
      *
      * @return the {@link GameBoardType}
      */
-    public GameBoardType getGameBoardType() {
+    GameBoardType getGameBoardType() {
         return gameBoardType;
     }
 
@@ -158,7 +156,7 @@ public class GameBoard {
      * @return a {@link PlayerMark} array representing the diagonal at index <code>i</code>.
      * <code>null</code> if <code>i</code> is invalid.
      */
-    public PlayerMark[] getDiagonalTopDown(int i) {
+    PlayerMark[] getDiagonalTopDown(int i) {
 
         if (!Utils.inRange(i, 0, 2 * board.length - 1)) {
             return null;
@@ -192,9 +190,9 @@ public class GameBoard {
      *
      * @param i the index of the diagonal
      * @return a {@link PlayerMark} array representing the diagonal.
-     *<code>null</code> if <code>i</code> is invalid.
+     * <code>null</code> if <code>i</code> is invalid.
      */
-    public PlayerMark[] getDiagonalBottomUp(int i) {
+    PlayerMark[] getDiagonalBottomUp(int i) {
 
         if (!Utils.inRange(i, 0, 2 * board.length - 1)) {
             return null;
@@ -229,7 +227,7 @@ public class GameBoard {
      *
      * @return <code>true</code> if every cell of the board is occupied. <code>false</code> otherwise
      */
-    public boolean isFull() {
+    boolean isFull() {
         int count = 0;
 
         //TODO: this is inefficient ...

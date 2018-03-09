@@ -9,7 +9,7 @@ import edu.kit.informatik.genkinger.controller.TerminalWrapper;
  * @author Lukas Genkinger
  * @see ConnectSixGame
  */
-public class ConnectSixBuilder {
+class ConnectSixBuilder {
 
     /**
      * Returns a new {@link ConnectSixGame} if the specified <code>args</code> are valid.
@@ -19,7 +19,7 @@ public class ConnectSixBuilder {
      * @return the {@link ConnectSixGame} if the specified <code>args</code> are valid.
      * <code>null</code> otherwise.
      */
-    public static ConnectSixGame build(String[] args) {
+    static ConnectSixGame build(String[] args) {
 
         TerminalWrapper wrapper = new TerminalWrapper();
 

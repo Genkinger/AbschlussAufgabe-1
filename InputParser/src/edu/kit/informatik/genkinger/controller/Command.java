@@ -35,7 +35,7 @@ public class Command {
      *
      * @return the String representing the Command
      */
-    public String getCommand() {
+    String getCommand() {
         return command;
     }
 
@@ -77,7 +77,7 @@ public class Command {
      *
      * @param f the float to add to the list of parameters
      */
-    public void addFloatParameter(float f) {
+    void addFloatParameter(float f) {
         floats.add(f);
     }
 
@@ -86,7 +86,7 @@ public class Command {
      *
      * @param i the int to add to the list of parameters
      */
-    public void addIntegerParameter(int i) {
+    void addIntegerParameter(int i) {
         integers.add(i);
     }
 
@@ -95,7 +95,7 @@ public class Command {
      *
      * @param s the String to add to the list of parameters
      */
-    public void addStringParameter(String s) {
+    void addStringParameter(String s) {
         strings.add(s);
     }
 
@@ -105,7 +105,7 @@ public class Command {
      * @param reason the reason for the invalidation
      * @return <code>this</code>
      */
-    public Command invalidate(String reason) {
+    Command invalidate(String reason) {
         isValid = false;
         reasonForInvalidation = reason;
         return this;
@@ -116,7 +116,7 @@ public class Command {
      *
      * @return <code>true</code> if command is valid. <code>false</code> otherwise.
      */
-    public boolean isValid() {
+    boolean isValid() {
         return isValid;
     }
 

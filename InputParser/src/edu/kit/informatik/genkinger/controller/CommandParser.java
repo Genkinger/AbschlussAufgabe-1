@@ -1,6 +1,5 @@
 package edu.kit.informatik.genkinger.controller;
 
-import edu.kit.informatik.genkinger.StringUtils;
 
 import java.util.List;
 
@@ -14,10 +13,18 @@ import java.util.List;
  * @see CommandPrototype
  * @see Command
  */
-public class CommandParser {
+class CommandParser {
 
     private List<CommandPrototype> prototypes;
     private StringInputInterface inputInterface;
+
+    private String currentLineFull;
+    private String currentLineRemainder;
+    private String currentCommandString;
+    private int currentParameterIndex;
+    private ErrorCode errorCode = ErrorCode.OK;
+    private Command currentCommand;
+
 
     /**
      * Constructs a {@link CommandParser} from a list of CommandPrototypes that are used to match inputs against.
@@ -38,84 +45,145 @@ public class CommandParser {
      * @return a {@link Command} if the read input is a valid command.
      * The {@link Command} is invalidated with {@link Command#invalidate(String)} otherwise
      */
-    public Command nextCommand() {
-        //TODO: split this into multiple mehtod calls
+    Command next() {
+        currentLineFull = inputInterface.readLine();
 
-        Command command;
-        String line = inputInterface.readLine();
-        String[] parts = line.split("\\s+");
-
-        if (parts.length < 1) {
-            return new Command("").invalidate("Malformed command");
-        } else {
-
-            CommandPrototype prototype = findPrototypeFor(parts[0]);
-
-            if (prototype != null) {
-                command = new Command(parts[0]);
-                String remainderWithoutTrim = line.substring(parts[0].length());
-                String remainder = remainderWithoutTrim.trim();
-                String[] remainderParts = remainder.split(prototype.getLayout().getDelimiter());
-                if (prototype.getLayout().hasParameters()) {
-
-                    List<CommandParameterType> types = prototype.getLayout().getParameterList();
-
-                    if (remainderParts.length != types.size()
-                            || (StringUtils.countOccurrencesOf(remainder,
-                            prototype.getLayout().getDelimiter()) != types.size() - 1)) {
-                        return new Command(parts[0]).invalidate("Invalid number of parameters for '" + parts[0] + "'");
-                    }
-                    int index = 0;
-                    for (int i = 0; i < types.size(); i++) {
-                        CommandParameterType type = types.get(i);
-                        switch (type) {
-                            case INT: {
-                                try {
-                                    int param = Integer.parseInt(remainderParts[index]);
-                                    command.addIntegerParameter(param);
-                                    index++;
-                                } catch (NumberFormatException nfe) {
-                                    return new Command(parts[0])
-                                            .invalidate("Parameter at " + index + " is invalid for '" + parts[0] + "'");
-                                }
-                            }
-                            break;
-                            case STRING: {
-                                command.addStringParameter(remainderParts[index]);
-                                index++;
-                            }
-                            break;
-                            case FLOAT: {
-                                try {
-                                    float param = Float.parseFloat(remainderParts[index]);
-                                    command.addFloatParameter(param);
-                                    index++;
-                                } catch (NumberFormatException nfe) {
-                                    return new Command(parts[0])
-                                            .invalidate("Parameter at " + index + " is invalid for '" + parts[0] + "'");
-                                }
-                            }
-                            break;
-                            default:
-                                return new Command(parts[0])
-                                        .invalidate("Invalid parameter type in command '" + parts[0] + "'");
-                        }
-                    }
-                } else {
-                    if (remainderWithoutTrim.length() != 0) {
-                        command = new Command(parts[0])
-                                .invalidate("Invalid number of parameters for '" + parts[0] + "'");
-                    } else {
-                        command = new Command(parts[0]);
-                    }
-                }
-            } else {
-                return new Command(parts[0]).invalidate("Unknown command '" + parts[0] + "'");
+        if (!firstStage()) {
+            switch (errorCode) {
+                case UNKNOWN_COMMAND:
+                    return new Command(currentCommandString)
+                            .invalidate("Unknown command '" + currentCommandString + "'");
+                case MALFORMED_COMMAND:
+                    return new Command(currentCommandString)
+                            .invalidate("Malformed command");
+                case INVALID_PARAMETER:
+                    return new Command(currentCommandString)
+                            .invalidate("Invalid parameter at index (" + currentParameterIndex
+                                    + ") for command '" + currentCommandString + "'");
+                case INVALID_PARAMETER_COUNT:
+                    return new Command(currentCommandString)
+                            .invalidate("Invalid number of parameters for command '" + currentCommandString + "'");
+                case EXTRANEOUS_WHITESPACE:
+                    return new Command(currentCommandString)
+                            .invalidate("Extraneous whitespace in or around command");
+                default:
+                    break;
             }
         }
-        return command;
+
+        return currentCommand;
     }
 
+    private boolean firstStage() {
+
+        if (!validateWhitespaceRules(currentLineFull)) {
+            errorCode = ErrorCode.EXTRANEOUS_WHITESPACE;
+            return false;
+        }
+
+        String[] parts = currentLineFull.split("\\s+");
+
+        if (parts.length == 0) {
+            errorCode = ErrorCode.MALFORMED_COMMAND;
+            return false;
+        }
+
+        currentCommandString = parts[0];
+        CommandPrototype prototype = findPrototypeFor(currentCommandString);
+
+        if (prototype == null) {
+            errorCode = ErrorCode.UNKNOWN_COMMAND;
+            return false;
+        }
+
+        currentCommand = new Command(currentCommandString);
+        currentLineRemainder = currentLineFull.substring(currentCommandString.length());
+
+        if (!secondStage(prototype)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean secondStage(CommandPrototype prototype) {
+
+        String[] parts = currentLineRemainder.trim().split(prototype.getLayout().getDelimiter());
+
+
+        if (prototype.getLayout().hasParameters()) {
+
+            if (parts.length != prototype.getLayout().getParameterList().size()) {
+                errorCode = ErrorCode.INVALID_PARAMETER_COUNT;
+                return false;
+            }
+
+            List<CommandParameterType> typeList = prototype.getLayout().getParameterList();
+            currentParameterIndex = 0;
+            for (CommandParameterType type : typeList) {
+                switch (type) {
+                    case INT:
+                        try {
+                            int parameter = Integer.parseInt(parts[currentParameterIndex]);
+                            currentCommand.addIntegerParameter(parameter);
+                            currentParameterIndex++;
+                        } catch (NumberFormatException nfe) {
+                            errorCode = ErrorCode.INVALID_PARAMETER;
+                            return false;
+                        }
+                        break;
+                    case FLOAT:
+                        try {
+                            float parameter = Float.parseFloat(parts[currentParameterIndex]);
+                            currentCommand.addFloatParameter(parameter);
+                            currentParameterIndex++;
+                        } catch (NumberFormatException nfe) {
+                            errorCode = ErrorCode.INVALID_PARAMETER;
+                            return false;
+                        }
+                        break;
+                    case STRING:
+                        currentCommand.addStringParameter(parts[currentParameterIndex]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validateWhitespaceRules(String str) {
+        /*
+          * Commands shouldn't:
+          * 1. start with whitespace
+          * 2. have more than one whitespace separating the command name from the parameter list
+          * 3. have extraneous whitespace at the end of the parameter list
+         */
+
+        /* 1. */
+        if (str.matches("^\\s+.*")) {
+            return false;
+        }
+
+        /* 2. */
+        String parts[] = str.split("\\s+");
+        if (parts.length > 1) {
+            String rem = str.substring(parts[0].length() + 1);
+            if (rem.matches("^\\s+.*")) {
+                return false;
+            }
+        }
+
+        /* 3. */
+        if (str.matches(".*\\s+$")) {
+            return false;
+        }
+
+
+        return true;
+    }
 
     private CommandPrototype findPrototypeFor(String command) {
 

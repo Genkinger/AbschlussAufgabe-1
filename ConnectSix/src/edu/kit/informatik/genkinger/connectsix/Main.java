@@ -1,4 +1,4 @@
-package edu.kit.informatik.genkinger;
+package edu.kit.informatik.genkinger.connectsix;
 
 import edu.kit.informatik.genkinger.connectsix.ConnectSixBuilder;
 import edu.kit.informatik.genkinger.connectsix.ConnectSixGame;
