@@ -1,4 +1,4 @@
-package edu.kit.informatik.genkinger;
+package edu.kit.informatik;
 
 
 /**

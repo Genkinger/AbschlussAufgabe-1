@@ -144,6 +144,7 @@ class CommandParser {
                         break;
                     case STRING:
                         currentCommand.addStringParameter(parts[currentParameterIndex]);
+                        currentParameterIndex++;
                         break;
                     default:
                         break;
