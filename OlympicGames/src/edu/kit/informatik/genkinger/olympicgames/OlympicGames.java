@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class OlympicGames {
 
 
-    private AdminContainer adminContainer = new AdminContainer();
-    private AthleteContainer athleteContainer = new AthleteContainer();
-    private VenueContainer venueContainer = new VenueContainer();
-    private SportContainer sportContainer = new SportContainer();
-    private IocContainer iocContainer = new IocContainer();
-    private CompetitionContainer competitionContainer = new CompetitionContainer();
+    AdminContainer adminContainer = new AdminContainer();
+    AthleteContainer athleteContainer = new AthleteContainer();
+    VenueContainer venueContainer = new VenueContainer();
+    SportContainer sportContainer = new SportContainer();
+    IocContainer iocContainer = new IocContainer();
+    CompetitionContainer competitionContainer = new CompetitionContainer();
 
     private StringInputController controller;
     private StringOutputInterface outputInterface;
@@ -112,7 +112,7 @@ public class OlympicGames {
 
         Action[] actions = {
                 (c, cmd) -> {
-                    if (checkLogin()) {
+                    if (adminContainer.isLoggedIn()) {
                         outputInterface.printError("can't execute command when logged in");
                         return;
                     }
@@ -318,6 +318,7 @@ public class OlympicGames {
 
                 (c, cmd) -> {
                     reset();
+                    ok();
                 }, //reset
 
                 (c, cmd) -> {

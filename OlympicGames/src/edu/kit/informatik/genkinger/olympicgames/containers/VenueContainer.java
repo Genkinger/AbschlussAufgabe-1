@@ -27,7 +27,7 @@ public class VenueContainer extends Container implements Clearable {
         return true;
     }
 
-    Venue findVenueByName(String name) {
+    private Venue findVenueByName(String name) {
         for (Venue venue : venues) {
             if (venue.getName().equals(name)) {
                 return venue;
