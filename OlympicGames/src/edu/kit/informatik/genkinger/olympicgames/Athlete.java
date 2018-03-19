@@ -3,14 +3,15 @@ package edu.kit.informatik.genkinger.olympicgames;
 public class Athlete extends Person {
 
     private int id;
-    private Country country;
+    private IocCode iocCode;
     private Sport sport;
-    private SportDiscipline discipline;
+    private Discipline discipline;
+    private int medalCount;
 
-    public Athlete(String firstName, String lastName, int id, Country country, Sport sport, SportDiscipline discipline) {
+    public Athlete(String firstName, String lastName, int id, IocCode iocCode, Sport sport, Discipline discipline) {
         super(firstName, lastName);
         this.id = id;
-        this.country = country;
+        this.iocCode = iocCode;
         this.sport = sport;
         this.discipline = discipline;
     }
@@ -19,31 +20,28 @@ public class Athlete extends Person {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
+    public IocCode getIocCode() {
+        return iocCode;
     }
 
     public Sport getSport() {
         return sport;
     }
 
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
-
-    public SportDiscipline getDiscipline() {
+    public Discipline getDiscipline() {
         return discipline;
     }
 
-    public void setDiscipline(SportDiscipline discipline) {
-        this.discipline = discipline;
+    public int getMedalCount() {
+        return medalCount;
+    }
+
+    public void setMedalCount(int medalCount) {
+        this.medalCount = medalCount;
+    }
+
+    @Override
+    public String toString() {
+        return id + " " + getFirstName() + " " + getLastName() + " " + medalCount;
     }
 }
