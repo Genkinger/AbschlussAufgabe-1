@@ -302,7 +302,7 @@ public class OlympicGames {
                         return;
                     }
 
-                    if (!competitionContainer.addCompetition(id, year, code, sport, discipline, new MedalTable(gold, silver, bronze))) {
+                    if (!competitionContainer.addCompetition(id, year, code, sport, discipline, new Medals(gold, silver, bronze))) {
                         outputInterface.printError(competitionContainer.getErrorString());
                     } else {
                         ok();

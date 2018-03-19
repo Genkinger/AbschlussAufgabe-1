@@ -8,7 +8,7 @@ public class CompetitionContainer extends Container implements Clearable {
 
     ArrayList<Competition> competitions = new ArrayList<>();
 
-    public boolean addCompetition(int athleteId, int year, IocCode code, Sport sport, Discipline discipline, MedalTable table) {
+    public boolean addCompetition(int athleteId, int year, IocCode code, Sport sport, Discipline discipline, Medals table) {
         return true;
     }
 
