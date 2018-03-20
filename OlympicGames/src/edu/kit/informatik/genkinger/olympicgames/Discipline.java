@@ -1,7 +1,9 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
 public class Discipline {
+
     private String name;
+
 
     public Discipline(String name) {
         this.name = name;
@@ -11,4 +13,9 @@ public class Discipline {
         return name;
     }
 
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

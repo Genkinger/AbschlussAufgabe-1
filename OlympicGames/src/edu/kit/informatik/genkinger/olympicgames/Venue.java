@@ -2,14 +2,15 @@ package edu.kit.informatik.genkinger.olympicgames;
 
 public class Venue {
 
-    private int id;
+    private String id;
     private IocCode iocCode;
     private String locus;
     private String name;
-    private int year;
+    private String year;
     private int spectatorCount;
 
-    public Venue(int id, IocCode iocCode, String locus, String name, int year, int spectatorCount) {
+
+    public Venue(String id, IocCode iocCode, String locus, String name, String year, int spectatorCount) {
         this.id = id;
         this.iocCode = iocCode;
         this.locus = locus;
@@ -18,7 +19,7 @@ public class Venue {
         this.spectatorCount = spectatorCount;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -34,7 +35,7 @@ public class Venue {
         return name;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -42,11 +43,16 @@ public class Venue {
         return spectatorCount;
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Venue) {
             Venue v = (Venue) obj;
-            if (v.getId() == id) {
+            if (v.getId() == id
+                    || (v.getIocCode().equals(iocCode)
+                    && v.getLocus().equals(locus)
+                    && v.getName().equals(name)
+                    && v.getSpectatorCount() == spectatorCount)) {
                 return true;
             }
         }
@@ -57,5 +63,7 @@ public class Venue {
     public String toString() {
         return id + " " + locus + " " + spectatorCount;
     }
+
+
 }
 

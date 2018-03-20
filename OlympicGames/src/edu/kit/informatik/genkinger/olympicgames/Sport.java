@@ -5,8 +5,10 @@ import edu.kit.informatik.genkinger.olympicgames.containers.Container;
 import java.util.ArrayList;
 
 public class Sport extends Container {
+
     private String name;
     private ArrayList<Discipline> disciplines = new ArrayList<>();
+
 
     public Sport(String name) {
         this.name = name;
@@ -18,7 +20,7 @@ public class Sport extends Container {
 
     public boolean addDiscipline(String discipline) {
         if (findDisciplineByName(discipline) != null) {
-            setErrorString("discipline already found");
+            setErrorString("discipline already exists for " + name);
             return false;
         }
 
@@ -36,6 +38,7 @@ public class Sport extends Container {
         return null;
     }
 
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -43,7 +46,6 @@ public class Sport extends Container {
             builder.append(name);
             builder.append(" ");
             builder.append(discipline);
-            builder.append(" ");
             builder.append("\n");
         }
         return builder.toString().trim();

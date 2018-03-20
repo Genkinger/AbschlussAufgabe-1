@@ -2,13 +2,13 @@ package edu.kit.informatik.genkinger.olympicgames;
 
 public class Athlete extends Person {
 
-    private int id;
+    private String id;
     private IocCode iocCode;
     private Sport sport;
     private Discipline discipline;
     private int medalCount;
 
-    public Athlete(String firstName, String lastName, int id, IocCode iocCode, Sport sport, Discipline discipline) {
+    public Athlete(String id, String firstName, String lastName, IocCode iocCode, Sport sport, Discipline discipline) {
         super(firstName, lastName);
         this.id = id;
         this.iocCode = iocCode;
@@ -16,7 +16,7 @@ public class Athlete extends Person {
         this.discipline = discipline;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

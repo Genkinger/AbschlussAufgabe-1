@@ -2,7 +2,7 @@ package edu.kit.informatik.genkinger.olympicgames;
 
 public class Admin extends Person {
 
-    public String username;
+    private String username;
     private String password;
 
     public Admin(String firstName, String lastName, String username, String password) {

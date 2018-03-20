@@ -10,7 +10,7 @@ public class AthleteComparator implements Comparator<Athlete> {
         } else if (o1.getMedalCount() < o2.getMedalCount()) {
             return -1;
         } else {
-            if (o1.getId() > o2.getId()) {
+            if (Integer.parseInt(o1.getId()) > Integer.parseInt(o2.getId())) {
                 return 1;
             } else {
                 return -1;

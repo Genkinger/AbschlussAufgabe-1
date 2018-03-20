@@ -143,8 +143,13 @@ class CommandParser {
                         }
                         break;
                     case STRING:
-                        currentCommand.addStringParameter(parts[currentParameterIndex]);
-                        currentParameterIndex++;
+                        if (parts[currentParameterIndex].length() > 0) {
+                            currentCommand.addStringParameter(parts[currentParameterIndex]);
+                            currentParameterIndex++;
+                        } else {
+                            errorCode = ErrorCode.INVALID_PARAMETER;
+                            return false;
+                        }
                         break;
                     default:
                         break;

@@ -10,7 +10,7 @@ public class VenueComparator implements Comparator<Venue> {
         } else if (o1.getSpectatorCount() < o2.getSpectatorCount()) {
             return 1;
         } else {
-            if (o1.getId() < o2.getId()) {
+            if (Integer.parseInt(o1.getId()) < Integer.parseInt(o2.getId())) {
                 return 1;
             } else {
                 return -1;

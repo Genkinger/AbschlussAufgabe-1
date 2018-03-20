@@ -3,41 +3,65 @@ package edu.kit.informatik.genkinger.olympicgames.containers;
 import edu.kit.informatik.genkinger.olympicgames.Clearable;
 import edu.kit.informatik.genkinger.olympicgames.IocCode;
 import edu.kit.informatik.genkinger.olympicgames.Venue;
-import edu.kit.informatik.genkinger.olympicgames.VenueComparator;
 
 import java.util.ArrayList;
 
 public class VenueContainer extends Container implements Clearable {
+
     private ArrayList<Venue> venues = new ArrayList<>();
 
 
-    public boolean addVenue(int id, IocCode code, String locus, String name, int openingYear, int spectatorCount) {
+    public boolean addVenue(String id, IocCode code, String locus, String name, String openingYear, int spectatorCount) {
 
-        Venue venue = findVenueByName(name);
-        if (venue != null) {
-            if (venue.getIocCode().equals(code) && venue.getLocus().equals(locus)) {
-                setErrorString("venue with that name already exists in " + locus + ", " + code.getCountryName());
+        if (!id.matches("[0-9]{3}")) {
+            setErrorString("invalid id");
+            return false;
+        }
+
+        if (!openingYear.matches("[0-9]{4}")) {
+            setErrorString("invalid year");
+            return false;
+        }
+
+        ArrayList<Venue> venuesByName = findVenuesByName(name);
+        for (Venue venue : venuesByName) {
+            if (venue.getLocus().equals(locus) && venue.getIocCode().equals(code)) {
+                setErrorString("venue with that name already exists for " + locus + ", " + code.getCountryName());
                 return false;
             }
         }
 
+        for (Venue venue : venues) {
+            if (venue.getId().equals(id)) {
+                setErrorString("venue with that id already exists");
+            }
+        }
+
         venues.add(new Venue(id, code, locus, name, openingYear, spectatorCount));
-        venues.sort(new VenueComparator());
 
         return true;
     }
 
-    private Venue findVenueByName(String name) {
+    private ArrayList<Venue> findVenuesByName(String name) {
+        ArrayList<Venue> vens = new ArrayList<>();
+
         for (Venue venue : venues) {
             if (venue.getName().equals(name)) {
-                return venue;
+                vens.add(venue);
             }
         }
-        return null;
+
+        return vens;
     }
 
-    public ArrayList<Venue> getVenues() {
-        return venues;
+    public ArrayList<Venue> findVenuesByCountry(String country) {
+        ArrayList<Venue> vens = new ArrayList<>();
+        for (Venue venue : venues) {
+            if (venue.getIocCode().getCountryName().equals(country)) {
+                vens.add(venue);
+            }
+        }
+        return vens;
     }
 
     @Override
@@ -45,18 +69,21 @@ public class VenueContainer extends Container implements Clearable {
         venues.clear();
     }
 
-    @Override
-    public String toString() {
+    public String getVenuesByCountryAsString(String country) {
         StringBuilder builder = new StringBuilder();
+
+        ArrayList<Venue> vens = findVenuesByCountry(country);
+
         int index = 1;
-        for (Venue venue : venues) {
+        for (Venue venue : vens) {
             builder.append("(");
             builder.append(index);
             builder.append(" ");
             builder.append(venue);
             builder.append(")");
+            builder.append("\n");
             index++;
         }
-        return builder.toString();
+        return builder.toString().trim();
     }
 }

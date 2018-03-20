@@ -1,6 +1,5 @@
 package edu.kit.informatik.genkinger.olympicgames.containers;
 
-import edu.kit.informatik.Utils;
 import edu.kit.informatik.genkinger.olympicgames.Clearable;
 import edu.kit.informatik.genkinger.olympicgames.IocCode;
 import edu.kit.informatik.genkinger.olympicgames.IocCodeComparator;
@@ -10,52 +9,42 @@ import java.util.ArrayList;
 public class IocContainer extends Container implements Clearable {
     private ArrayList<IocCode> iocCodes = new ArrayList<>();
 
-    public boolean addIocCode(int id, String code, String countryName, int year) {
+    public boolean addIocCode(String id, String code, String countryName, String year) {
+
+        if (!id.matches("[0-9]{3}")) {
+            setErrorString("invalid id");
+            return false;
+        }
+
+        if (!year.matches("[0-9]{4}")) {
+            setErrorString("invalid year");
+            return false;
+        }
+
+        if (!code.matches("[a-z]{3}")) {
+            setErrorString("invalid code");
+            return false;
+        }
+
         if (findIocCodeByCode(code) != null) {
             setErrorString("IocCode with that code already exists");
             return false;
         }
+
         if (findIocCodeByCountry(countryName) != null) {
             setErrorString("IocCode for '" + countryName + "' already exists");
             return false;
         }
+
         if (findIocCodeById(id) != null) {
             setErrorString("IocCode with that id already exists");
             return false;
         }
 
-        if (!Utils.inRange(id, 0, 999)) {
-            setErrorString("invalid id");
-            return false;
-        }
-
-        if (!validateYear(year)) {
-            setErrorString("invalid year");
-            return false;
-        }
-
         iocCodes.add(new IocCode(id, code, countryName, year));
-
         iocCodes.sort(new IocCodeComparator());
+
         return true;
-    }
-
-    public IocCode findIocCodeByCode(String code) {
-        for (IocCode iocCode : iocCodes) {
-            if (iocCode.getCode().equals(code)) {
-                return iocCode;
-            }
-        }
-        return null;
-    }
-
-    public IocCode findIocCodeById(int id) {
-        for (IocCode iocCode : iocCodes) {
-            if (iocCode.getId() == id) {
-                return iocCode;
-            }
-        }
-        return null;
     }
 
     public IocCode findIocCodeByCountry(String country) {
@@ -67,13 +56,24 @@ public class IocContainer extends Container implements Clearable {
         return null;
     }
 
-    //TODO: do real checking
-    private boolean validateYear(int year) {
-        if (Utils.inRange(year, 0, 9999)) {
-            return true;
+    private IocCode findIocCodeByCode(String code) {
+        for (IocCode iocCode : iocCodes) {
+            if (iocCode.getCode().equals(code)) {
+                return iocCode;
+            }
         }
-        return false;
+        return null;
     }
+
+    private IocCode findIocCodeById(String id) {
+        for (IocCode iocCode : iocCodes) {
+            if (iocCode.getId().equals(id)) {
+                return iocCode;
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public void clear() {
