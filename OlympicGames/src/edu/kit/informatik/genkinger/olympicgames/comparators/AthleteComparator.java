@@ -1,4 +1,6 @@
-package edu.kit.informatik.genkinger.olympicgames;
+package edu.kit.informatik.genkinger.olympicgames.comparators;
+
+import edu.kit.informatik.genkinger.olympicgames.Athlete;
 
 import java.util.Comparator;
 

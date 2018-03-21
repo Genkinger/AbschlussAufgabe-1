@@ -9,11 +9,12 @@ public class OlympicGames {
 
 
     AdminContainer adminContainer = new AdminContainer();
-    AthleteContainer athleteContainer = new AthleteContainer();
-    VenueContainer venueContainer = new VenueContainer();
     SportContainer sportContainer = new SportContainer();
     IocContainer iocContainer = new IocContainer();
-    CompetitionContainer competitionContainer = new CompetitionContainer();
+
+    AthleteContainer athleteContainer = new AthleteContainer(iocContainer, sportContainer);
+    CompetitionContainer competitionContainer = new CompetitionContainer(iocContainer);
+    VenueContainer venueContainer = new VenueContainer(iocContainer);
 
     private StringInputController controller;
     private StringOutputInterface outputInterface;
@@ -145,19 +146,13 @@ public class OlympicGames {
                 }
 
                 String id = cmd.getStringParameter(0);
-                String countryName = cmd.getStringParameter(1);
+                String country = cmd.getStringParameter(1);
                 String locus = cmd.getStringParameter(2);
                 String name = cmd.getStringParameter(3);
-                String openingYear = cmd.getStringParameter(4);
+                String year = cmd.getStringParameter(4);
                 int spectatorCount = cmd.getIntegerParameter(0);
 
-                IocCode code = iocContainer.findIocCodeByCountry(countryName);
-                if (code == null) {
-                    outputInterface.printError("unknown country");
-                    return;
-                }
-
-                if (!venueContainer.addVenue(id, code, locus, name, openingYear, spectatorCount)) {
+                if (!venueContainer.addVenue(id, country, locus, name, year, spectatorCount)) {
                     outputInterface.printError(venueContainer.getErrorString());
                 } else {
                     ok();
@@ -168,21 +163,19 @@ public class OlympicGames {
                 if (!checkLogin()) {
                     return;
                 }
-                String countryName = cmd.getStringParameter(0);
-                listSportsVenues(countryName);
+                String country = cmd.getStringParameter(0);
+
+                listSportsVenues(country);
             }, //list-sports-venues
 
             (c, cmd) -> {
                 if (!checkLogin()) {
                     return;
                 }
-
                 String sport = cmd.getStringParameter(0);
                 String discipline = cmd.getStringParameter(1);
 
-                sportContainer.addSport(sport);
-
-                if (!sportContainer.addDisciplineToSport(sport, discipline)) {
+                if (!sportContainer.addSport(sport, discipline)) {
                     outputInterface.printError(sportContainer.getErrorString());
                 } else {
                     ok();
@@ -201,16 +194,18 @@ public class OlympicGames {
                 if (!checkLogin()) {
                     return;
                 }
+
                 String id = cmd.getStringParameter(0);
                 String code = cmd.getStringParameter(1);
-                String countryName = cmd.getStringParameter(2);
+                String country = cmd.getStringParameter(2);
                 String year = cmd.getStringParameter(3);
 
-                if (!iocContainer.addIocCode(id, code, countryName, year)) {
+                if (!iocContainer.addIocCode(id, code, country, year)) {
                     outputInterface.printError(iocContainer.getErrorString());
                 } else {
                     ok();
                 }
+
             }, //add-ioc-code
 
             (c, cmd) -> {
@@ -224,42 +219,27 @@ public class OlympicGames {
                 if (!checkLogin()) {
                     return;
                 }
+
                 String id = cmd.getStringParameter(0);
                 String firstName = cmd.getStringParameter(1);
                 String lastName = cmd.getStringParameter(2);
-                String countryName = cmd.getStringParameter(3);
-                String sportstr = cmd.getStringParameter(4);
-                String disciplinestr = cmd.getStringParameter(5);
+                String country = cmd.getStringParameter(3);
+                String sport = cmd.getStringParameter(4);
+                String discipline = cmd.getStringParameter(5);
 
-                IocCode code = iocContainer.findIocCodeByCountry(countryName);
-                if (code == null) {
-                    outputInterface.printError("unknown country");
-                    return;
-                }
-
-                Sport sport = sportContainer.findSportByName(sportstr);
-                if (sport == null) {
-                    outputInterface.printError("unknown sport");
-                    return;
-                }
-
-                Discipline discipline = sport.findDisciplineByName(disciplinestr);
-                if (discipline == null) {
-                    outputInterface.printError("unknown discipline");
-                    return;
-                }
-
-                if (!athleteContainer.addAthlete(id, firstName, lastName, code, sport, discipline)) {
+                if (!athleteContainer.addAthlete(id, firstName, lastName, country, sport, discipline)) {
                     outputInterface.printError(athleteContainer.getErrorString());
                 } else {
                     ok();
                 }
+
             }, //add-athlete
 
             (c, cmd) -> {
                 if (!checkLogin()) {
                     return;
                 }
+
                 String sport = cmd.getStringParameter(0);
                 String discipline = cmd.getStringParameter(1);
 
@@ -270,52 +250,12 @@ public class OlympicGames {
                 if (!checkLogin()) {
                     return;
                 }
-                String athleteId = cmd.getStringParameter(0);
-                String year = cmd.getStringParameter(1);
-                String countryName = cmd.getStringParameter(2);
-                String sportstr = cmd.getStringParameter(3);
-                String disciplinestr = cmd.getStringParameter(4);
-                int gold = cmd.getIntegerParameter(0);
-                int silver = cmd.getIntegerParameter(1);
-                int bronze = cmd.getIntegerParameter(2);
-
-                IocCode code = iocContainer.findIocCodeByCountry(countryName);
-                if (code == null) {
-                    outputInterface.printError("unknown country");
-                    return;
-                }
-
-                Sport sport = sportContainer.findSportByName(sportstr);
-                if (sport == null) {
-                    outputInterface.printError("unknown sport");
-                    return;
-                }
-
-                Discipline discipline = sport.findDisciplineByName(disciplinestr);
-                if (discipline == null) {
-                    outputInterface.printError("unknown discipline");
-                    return;
-                }
-
-                Athlete athlete = athleteContainer.findAthleteById(athleteId);
-                if (athlete == null) {
-                    outputInterface.printError("unknown athlete");
-                    return;
-                }
-
-                if (!competitionContainer.addCompetition(athlete, year, code, sport, discipline,
-                        new Medals(gold, silver, bronze))) {
-                    outputInterface.printError(competitionContainer.getErrorString());
-                } else {
-                    ok();
-                }
             }, //add-competition
 
             (c, cmd) -> {
                 if (!checkLogin()) {
                     return;
                 }
-                olympicMedalTable();
             }, //olympic-medal-table
 
             (c, cmd) -> {
@@ -350,13 +290,27 @@ public class OlympicGames {
     }
 
     private void listSportsVenues(String countryName) {
-        if (iocContainer.findIocCodeByCountry(countryName) == null) {
-            outputInterface.printError("unknown country");
+
+        StringBuilder builder = new StringBuilder();
+
+        ArrayList<Venue> venues = venueContainer.findVenuesByCountry(countryName);
+        if (venues == null) {
+            outputInterface.printError(venueContainer.getErrorString());
             return;
         }
 
-        outputInterface.printLine(venueContainer.getVenuesByCountryAsString(countryName));
+        int index = 1;
+        for (Venue venue : venues) {
+            builder.append("(");
+            builder.append(index);
+            builder.append(" ");
+            builder.append(venue);
+            builder.append(")");
+            builder.append("\n");
+            index++;
+        }
 
+        outputInterface.printLine(builder.toString().trim());
     }
 
     private void listOlympicSports() {
@@ -368,16 +322,11 @@ public class OlympicGames {
     }
 
     private void summaryAthletes(String sport, String discipline) {
-        ArrayList<Athlete> athletes = new ArrayList<>();
-        for (Athlete athlete : athleteContainer.getAthletes()) {
-            if (athlete.getSport().getName().equals(sport)) {
-                if (athlete.getSport().findDisciplineByName(discipline) != null) {
-                    athletes.add(athlete);
-                }
-            }
+        ArrayList<Athlete> athletes = athleteContainer.findBySportAndDiscipline(sport, discipline);
+        if (athletes == null) {
+            outputInterface.printError(athleteContainer.getErrorString());
+            return;
         }
-
-        athletes.sort(new AthleteComparator());
 
         for (Athlete athlete : athletes) {
             outputInterface.printLine(athlete);

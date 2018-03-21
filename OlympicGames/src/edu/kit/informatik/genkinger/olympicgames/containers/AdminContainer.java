@@ -12,16 +12,18 @@ public class AdminContainer extends Container implements Clearable {
 
 
     public boolean addAdmin(String firstName, String lastName, String username, String password) {
-        if (!Utils.inRange(username.length(), 4, 8)) {
+        if (findByUsername(username) != null) {
+            setErrorString("someone with this username already exists");
+            return false;
+        }
+
+        if (!username.matches(".{4,8}")) {
             setErrorString("username has to be between 4 and 8 characters in length");
             return false;
         }
-        if (!Utils.inRange(password.length(), 8, 12)) {
+
+        if (!password.matches(".{8,12}")) {
             setErrorString("password has to be between 8 and 12 characters in length");
-            return false;
-        }
-        if (findByUsername(username) != null) {
-            setErrorString("someone with this username already exists");
             return false;
         }
 
@@ -34,16 +36,21 @@ public class AdminContainer extends Container implements Clearable {
     public boolean loginAdmin(String username, String password) {
         Admin admin = findByUsername(username);
         if (admin == null) {
-            setErrorString("no such user exists");
+            setErrorString("invalid username");
             return false;
         }
+
         if (!admin.getPassword().equals(password)) {
-            setErrorString("wrong password");
+            setErrorString("invalid password");
+            return false;
+        }
+
+        if (loggedIn) {
+            setErrorString("already logged in");
             return false;
         }
 
         loggedIn = true;
-
         return true;
     }
 

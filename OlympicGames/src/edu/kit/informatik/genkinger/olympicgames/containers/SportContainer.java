@@ -2,23 +2,31 @@ package edu.kit.informatik.genkinger.olympicgames.containers;
 
 import edu.kit.informatik.genkinger.olympicgames.Clearable;
 import edu.kit.informatik.genkinger.olympicgames.Sport;
+import edu.kit.informatik.genkinger.olympicgames.comparators.SportComparator;
 
 import java.util.ArrayList;
 
 public class SportContainer extends Container implements Clearable {
     private ArrayList<Sport> sports = new ArrayList<>();
 
-    public boolean addSport(String name) {
-        if (findSportByName(name) != null) {
-            setErrorString("sport already exists");
-            return false;
-        }
+    public boolean addSport(String name, String discipline) {
 
-        sports.add(new Sport(name));
+        Sport sport = findSportByName(name);
+        if (sport == null) {
+            Sport s = new Sport(name);
+            s.addDiscipline(discipline);
+            sports.add(s);
+            sports.sort(new SportComparator());
+        } else {
+            if (!sport.addDiscipline(discipline)) {
+                setErrorString(sport.getErrorString());
+                return false;
+            }
+        }
         return true;
     }
 
-    public boolean addDisciplineToSport(String name, String discipline) {
+    private boolean addDisciplineToSport(String name, String discipline) {
         Sport sport = findSportByName(name);
         if (sport == null) {
             setErrorString("unknown sport");

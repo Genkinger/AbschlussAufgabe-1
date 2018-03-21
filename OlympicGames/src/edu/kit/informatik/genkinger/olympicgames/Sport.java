@@ -1,5 +1,6 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
+import edu.kit.informatik.genkinger.olympicgames.comparators.DisciplineComparator;
 import edu.kit.informatik.genkinger.olympicgames.containers.Container;
 
 import java.util.ArrayList;
@@ -25,11 +26,12 @@ public class Sport extends Container {
         }
 
         disciplines.add(new Discipline(discipline));
+        disciplines.sort(new DisciplineComparator());
 
         return true;
     }
 
-    Discipline findDisciplineByName(String name) {
+    public Discipline findDisciplineByName(String name) {
         for (Discipline discipline : disciplines) {
             if (discipline.getName().equals(name)) {
                 return discipline;
@@ -38,6 +40,14 @@ public class Sport extends Container {
         return null;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Sport) {
+            Sport sport = (Sport) obj;
+            return name.equals(sport.getName());
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

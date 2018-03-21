@@ -7,6 +7,11 @@ import java.util.ArrayList;
 public class CompetitionContainer extends Container implements Clearable {
 
     private ArrayList<Competition> competitions = new ArrayList<>();
+    private IocContainer iocContainer;
+
+    public CompetitionContainer(IocContainer iocContainer) {
+        this.iocContainer = iocContainer;
+    }
 
     public boolean addCompetition(Athlete athlete, String year, IocCode code, Sport sport, Discipline discipline, Medals medals) {
 

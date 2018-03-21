@@ -8,12 +8,16 @@ import java.util.ArrayList;
 
 public class VenueContainer extends Container implements Clearable {
 
+    private IocContainer iocContainer;
     private ArrayList<Venue> venues = new ArrayList<>();
 
+    public VenueContainer(IocContainer iocContainer) {
+        this.iocContainer = iocContainer;
+    }
 
-    public boolean addVenue(String id, IocCode code, String locus, String name, String openingYear, int spectatorCount) {
+    public boolean addVenue(String id, String country, String locus, String name, String openingYear, int spectatorCount) {
 
-        if (!id.matches("[0-9]{3}")) {
+        if (!id.matches("[0-9]{3}") || id.equals("000")) {
             setErrorString("invalid id");
             return false;
         }
@@ -23,10 +27,21 @@ public class VenueContainer extends Container implements Clearable {
             return false;
         }
 
+        IocCode iocCode = iocContainer.findIocCodeByCountry(country);
+        if (iocCode == null) {
+            setErrorString("invalid country");
+            return false;
+        }
+
+        if (spectatorCount <= 0) {
+            setErrorString("invalid spectator count");
+            return false;
+        }
+
         ArrayList<Venue> venuesByName = findVenuesByName(name);
         for (Venue venue : venuesByName) {
-            if (venue.getLocus().equals(locus) && venue.getIocCode().equals(code)) {
-                setErrorString("venue with that name already exists for " + locus + ", " + code.getCountryName());
+            if (venue.getLocus().equals(locus) && venue.getIocCode().equals(iocCode)) {
+                setErrorString("venue with that name already exists for " + locus + ", " + iocCode.getCountryName());
                 return false;
             }
         }
@@ -37,7 +52,7 @@ public class VenueContainer extends Container implements Clearable {
             }
         }
 
-        venues.add(new Venue(id, code, locus, name, openingYear, spectatorCount));
+        venues.add(new Venue(id, iocCode, locus, name, openingYear, spectatorCount));
 
         return true;
     }
@@ -55,6 +70,11 @@ public class VenueContainer extends Container implements Clearable {
     }
 
     public ArrayList<Venue> findVenuesByCountry(String country) {
+        if (iocContainer.findIocCodeByCountry(country) == null) {
+            setErrorString("invalid country");
+            return null;
+        }
+
         ArrayList<Venue> vens = new ArrayList<>();
         for (Venue venue : venues) {
             if (venue.getIocCode().getCountryName().equals(country)) {
@@ -67,23 +87,5 @@ public class VenueContainer extends Container implements Clearable {
     @Override
     public void clear() {
         venues.clear();
-    }
-
-    public String getVenuesByCountryAsString(String country) {
-        StringBuilder builder = new StringBuilder();
-
-        ArrayList<Venue> vens = findVenuesByCountry(country);
-
-        int index = 1;
-        for (Venue venue : vens) {
-            builder.append("(");
-            builder.append(index);
-            builder.append(" ");
-            builder.append(venue);
-            builder.append(")");
-            builder.append("\n");
-            index++;
-        }
-        return builder.toString().trim();
     }
 }

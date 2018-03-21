@@ -41,6 +41,23 @@ public class Athlete extends Person {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Athlete) {
+            Athlete athlete = (Athlete) obj;
+
+            if (athlete.getFirstName().equals(getFirstName())
+                    && athlete.getSport().equals(sport)
+                    && athlete.getDiscipline().equals(discipline)
+                    && athlete.getIocCode().equals(iocCode)
+                    && athlete.getLastName().equals(getLastName())) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return id + " " + getFirstName() + " " + getLastName() + " " + medalCount;
     }

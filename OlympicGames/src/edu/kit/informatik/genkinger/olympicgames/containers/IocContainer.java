@@ -2,7 +2,7 @@ package edu.kit.informatik.genkinger.olympicgames.containers;
 
 import edu.kit.informatik.genkinger.olympicgames.Clearable;
 import edu.kit.informatik.genkinger.olympicgames.IocCode;
-import edu.kit.informatik.genkinger.olympicgames.IocCodeComparator;
+import edu.kit.informatik.genkinger.olympicgames.comparators.IocCodeComparator;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class IocContainer extends Container implements Clearable {
 
     public boolean addIocCode(String id, String code, String countryName, String year) {
 
-        if (!id.matches("[0-9]{3}")) {
+        if (!id.matches("[0-9]{3}") || id.equals("000")) {
             setErrorString("invalid id");
             return false;
         }
@@ -47,7 +47,7 @@ public class IocContainer extends Container implements Clearable {
         return true;
     }
 
-    public IocCode findIocCodeByCountry(String country) {
+    IocCode findIocCodeByCountry(String country) {
         for (IocCode iocCode : iocCodes) {
             if (iocCode.getCountryName().equals(country)) {
                 return iocCode;
@@ -73,7 +73,6 @@ public class IocContainer extends Container implements Clearable {
         }
         return null;
     }
-
 
     @Override
     public void clear() {
