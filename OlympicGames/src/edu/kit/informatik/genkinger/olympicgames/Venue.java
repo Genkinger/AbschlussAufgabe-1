@@ -1,5 +1,8 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
+/**
+ *
+ */
 public class Venue {
 
     private String id;
@@ -10,6 +13,15 @@ public class Venue {
     private int spectatorCount;
 
 
+    /**
+     *
+     * @param id .
+     * @param iocCode .
+     * @param locus .
+     * @param name .
+     * @param year .
+     * @param spectatorCount .
+     */
     public Venue(String id, IocCode iocCode, String locus, String name, String year, int spectatorCount) {
         this.id = id;
         this.iocCode = iocCode;
@@ -19,26 +31,50 @@ public class Venue {
         this.spectatorCount = spectatorCount;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     *
+     * @return .
+     */
     public IocCode getIocCode() {
         return iocCode;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getLocus() {
         return locus;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getYear() {
         return year;
     }
 
+    /**
+     *
+     * @return .
+     */
     public int getSpectatorCount() {
         return spectatorCount;
     }

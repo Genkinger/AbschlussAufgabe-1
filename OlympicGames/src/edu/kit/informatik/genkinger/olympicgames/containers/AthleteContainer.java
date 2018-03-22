@@ -5,18 +5,37 @@ import edu.kit.informatik.genkinger.olympicgames.comparators.AthleteComparator;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class AthleteContainer extends Container implements Clearable {
     private ArrayList<Athlete> athletes = new ArrayList<>();
 
     private IocContainer iocContainer;
     private SportContainer sportContainer;
 
+    /**
+     * @param iocContainer   .
+     * @param sportContainer .
+     */
     public AthleteContainer(IocContainer iocContainer, SportContainer sportContainer) {
         this.iocContainer = iocContainer;
         this.sportContainer = sportContainer;
     }
 
-    public boolean addAthlete(String id, String firstName, String lastName, String country, String sport, String discipline) {
+    /**
+     * @param id         .
+     * @param firstName  .
+     * @param lastName   .
+     * @param country    .
+     * @param sport      .
+     * @param discipline .
+     * @return .
+     */
+    public boolean addAthlete(String id, String firstName,
+                              String lastName, String country,
+                              String sport, String discipline) {
+
         if (!id.matches("[0-9]{4}") || id.equals("0000")) {
             setErrorString("invalid id");
         }
@@ -64,7 +83,11 @@ public class AthleteContainer extends Container implements Clearable {
         athletes.clear();
     }
 
-    public Athlete findById(String id) {
+    /**
+     * @param id .
+     * @return .
+     */
+    Athlete findById(String id) {
         for (Athlete athlete : athletes) {
             if (athlete.getId().equals(id)) {
                 return athlete;
@@ -73,6 +96,11 @@ public class AthleteContainer extends Container implements Clearable {
         return null;
     }
 
+    /**
+     * @param sport      .
+     * @param discipline .
+     * @return .
+     */
     public ArrayList<Athlete> findBySportAndDiscipline(String sport, String discipline) {
 
         Sport s = sportContainer.findSportByName(sport);

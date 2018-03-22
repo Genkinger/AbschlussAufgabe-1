@@ -5,20 +5,36 @@ import edu.kit.informatik.genkinger.olympicgames.containers.Container;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class Sport extends Container {
 
     private String name;
     private ArrayList<Discipline> disciplines = new ArrayList<>();
 
 
+    /**
+     *
+     * @param name .
+     */
     public Sport(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param discipline .
+     * @return .
+     */
     public boolean addDiscipline(String discipline) {
         if (findDisciplineByName(discipline) != null) {
             setErrorString("discipline already exists for " + name);
@@ -31,6 +47,11 @@ public class Sport extends Container {
         return true;
     }
 
+    /**
+     *
+     * @param name .
+     * @return .
+     */
     public Discipline findDisciplineByName(String name) {
         for (Discipline discipline : disciplines) {
             if (discipline.getName().equals(name)) {

@@ -1,8 +1,11 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
+/**
+ *
+ */
 public class Competition {
 
-    private String athleteId;
+    private Athlete athlete;
     private String year;
     private IocCode iocCode;
     private Sport sport;
@@ -10,8 +13,18 @@ public class Competition {
     private Medals medals;
 
 
-    public Competition(String athleteId, String year, IocCode iocCode, Sport sport, Discipline discipline, Medals medals) {
-        this.athleteId = athleteId;
+    /**
+     * @param athlete    .
+     * @param year       .
+     * @param iocCode    .
+     * @param sport      .
+     * @param discipline .
+     * @param medals     .
+     */
+    public Competition(Athlete athlete, String year,
+                       IocCode iocCode, Sport sport,
+                       Discipline discipline, Medals medals) {
+        this.athlete = athlete;
         this.year = year;
         this.iocCode = iocCode;
         this.sport = sport;
@@ -19,26 +32,44 @@ public class Competition {
         this.medals = medals;
     }
 
-    public String getAthleteId() {
-        return athleteId;
+    /**
+     * @return .
+     */
+    public Athlete getAthlete() {
+        return athlete;
     }
 
+    /**
+     * @return .
+     */
     public String getYear() {
         return year;
     }
 
+    /**
+     * @return .
+     */
     public IocCode getIocCode() {
         return iocCode;
     }
 
+    /**
+     * @return .
+     */
     public Sport getSport() {
         return sport;
     }
 
+    /**
+     * @return .
+     */
     public Discipline getDiscipline() {
         return discipline;
     }
 
+    /**
+     * @return .
+     */
     public Medals getMedals() {
         return medals;
     }

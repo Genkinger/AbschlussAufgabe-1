@@ -1,5 +1,8 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
+/**
+ *
+ */
 public class Athlete extends Person {
 
     private String id;
@@ -8,6 +11,15 @@ public class Athlete extends Person {
     private Discipline discipline;
     private int medalCount;
 
+    /**
+     *
+     * @param id .
+     * @param firstName .
+     * @param lastName .
+     * @param iocCode .
+     * @param sport .
+     * @param discipline .
+     */
     public Athlete(String id, String firstName, String lastName, IocCode iocCode, Sport sport, Discipline discipline) {
         super(firstName, lastName);
         this.id = id;
@@ -16,26 +28,50 @@ public class Athlete extends Person {
         this.discipline = discipline;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     *
+     * @return .
+     */
     public IocCode getIocCode() {
         return iocCode;
     }
 
+    /**
+     *
+     * @return .
+     */
     public Sport getSport() {
         return sport;
     }
 
+    /**
+     *
+     * @return .
+     */
     public Discipline getDiscipline() {
         return discipline;
     }
 
+    /**
+     *
+     * @return .
+     */
     public int getMedalCount() {
         return medalCount;
     }
 
+    /**
+     *
+     * @param medalCount .
+     */
     public void setMedalCount(int medalCount) {
         this.medalCount = medalCount;
     }

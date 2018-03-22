@@ -5,16 +5,20 @@ import edu.kit.informatik.genkinger.olympicgames.containers.*;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class OlympicGames {
 
 
-    AdminContainer adminContainer = new AdminContainer();
-    SportContainer sportContainer = new SportContainer();
-    IocContainer iocContainer = new IocContainer();
-
-    AthleteContainer athleteContainer = new AthleteContainer(iocContainer, sportContainer);
-    CompetitionContainer competitionContainer = new CompetitionContainer(iocContainer);
-    VenueContainer venueContainer = new VenueContainer(iocContainer);
+    private AdminContainer adminContainer = new AdminContainer();
+    private SportContainer sportContainer = new SportContainer();
+    private IocContainer iocContainer = new IocContainer();
+    private MedalTable medalTable = new MedalTable();
+    private AthleteContainer athleteContainer = new AthleteContainer(iocContainer, sportContainer);
+    private CompetitionContainer competitionContainer
+            = new CompetitionContainer(athleteContainer, iocContainer, sportContainer, medalTable);
+    private VenueContainer venueContainer = new VenueContainer(iocContainer);
 
     private StringInputController controller;
     private StringOutputInterface outputInterface;
@@ -250,12 +254,30 @@ public class OlympicGames {
                 if (!checkLogin()) {
                     return;
                 }
+
+                String id = cmd.getStringParameter(0);
+                String year = cmd.getStringParameter(1);
+                String country = cmd.getStringParameter(2);
+                String sport = cmd.getStringParameter(3);
+                String discipline = cmd.getStringParameter(4);
+                int gold = cmd.getIntegerParameter(0);
+                int silver = cmd.getIntegerParameter(1);
+                int bronze = cmd.getIntegerParameter(2);
+
+                if (!competitionContainer.addCompetition(id, year, country, sport, discipline,
+                        new Medals(gold, silver, bronze))) {
+                    outputInterface.printError(competitionContainer.getErrorString());
+                } else {
+                    ok();
+                }
+
             }, //add-competition
 
             (c, cmd) -> {
                 if (!checkLogin()) {
                     return;
                 }
+                olympicMedalTable();
             }, //olympic-medal-table
 
             (c, cmd) -> {
@@ -269,6 +291,11 @@ public class OlympicGames {
     };
 
 
+    /**
+     *
+     * @param inputInterface .
+     * @param outputInterface .
+     */
     OlympicGames(StringInputInterface inputInterface, StringOutputInterface outputInterface) {
         this.outputInterface = outputInterface;
         this.controller = new StringInputController(inputInterface);
@@ -285,6 +312,9 @@ public class OlympicGames {
         controller.attachDefaultAction((controller, cmd) -> outputInterface.printError(cmd.getReasonForInvalidation()));
     }
 
+    /**
+     *
+     */
     public void start() {
         controller.start();
     }
@@ -334,7 +364,7 @@ public class OlympicGames {
     }
 
     private void olympicMedalTable() {
-
+        outputInterface.printLine(medalTable);
     }
 
     private void reset() {

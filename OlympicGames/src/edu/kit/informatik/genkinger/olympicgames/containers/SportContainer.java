@@ -6,9 +6,17 @@ import edu.kit.informatik.genkinger.olympicgames.comparators.SportComparator;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class SportContainer extends Container implements Clearable {
     private ArrayList<Sport> sports = new ArrayList<>();
 
+    /**
+     * @param name       .
+     * @param discipline .
+     * @return .
+     */
     public boolean addSport(String name, String discipline) {
 
         Sport sport = findSportByName(name);
@@ -41,7 +49,11 @@ public class SportContainer extends Container implements Clearable {
         return true;
     }
 
-    public Sport findSportByName(String name) {
+    /**
+     * @param name .
+     * @return .
+     */
+    Sport findSportByName(String name) {
         for (Sport sport : sports) {
             if (sport.getName().equals(name)) {
                 return sport;

@@ -1,14 +1,25 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
+/**
+ *
+ */
 public class Discipline {
 
     private String name;
 
 
-    public Discipline(String name) {
+    /**
+     *
+     * @param name .
+     */
+    Discipline(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getName() {
         return name;
     }

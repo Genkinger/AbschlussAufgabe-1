@@ -3,19 +3,37 @@ package edu.kit.informatik.genkinger.olympicgames.containers;
 import edu.kit.informatik.genkinger.olympicgames.Clearable;
 import edu.kit.informatik.genkinger.olympicgames.IocCode;
 import edu.kit.informatik.genkinger.olympicgames.Venue;
+import edu.kit.informatik.genkinger.olympicgames.comparators.VenueComparator;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class VenueContainer extends Container implements Clearable {
 
     private IocContainer iocContainer;
     private ArrayList<Venue> venues = new ArrayList<>();
 
+    /**
+     * @param iocContainer .
+     */
     public VenueContainer(IocContainer iocContainer) {
         this.iocContainer = iocContainer;
     }
 
-    public boolean addVenue(String id, String country, String locus, String name, String openingYear, int spectatorCount) {
+    /**
+     * @param id             .
+     * @param country        .
+     * @param locus          .
+     * @param name           .
+     * @param openingYear    .
+     * @param spectatorCount .
+     * @return .
+     */
+    public boolean addVenue(String id, String country,
+                            String locus, String name,
+                            String openingYear, int spectatorCount) {
 
         if (!id.matches("[0-9]{3}") || id.equals("000")) {
             setErrorString("invalid id");
@@ -53,7 +71,7 @@ public class VenueContainer extends Container implements Clearable {
         }
 
         venues.add(new Venue(id, iocCode, locus, name, openingYear, spectatorCount));
-
+        venues.sort(new VenueComparator());
         return true;
     }
 
@@ -69,6 +87,10 @@ public class VenueContainer extends Container implements Clearable {
         return vens;
     }
 
+    /**
+     * @param country .
+     * @return .
+     */
     public ArrayList<Venue> findVenuesByCountry(String country) {
         if (iocContainer.findIocCodeByCountry(country) == null) {
             setErrorString("invalid country");
