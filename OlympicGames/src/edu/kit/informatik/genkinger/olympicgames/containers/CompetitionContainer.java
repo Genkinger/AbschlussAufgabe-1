@@ -105,7 +105,7 @@ public class CompetitionContainer extends Container implements Clearable {
         }
 
         int y = Integer.parseInt(year);
-        for (int i = 1926; i < 2018; i += 4) {
+        for (int i = 1926; i <= 2018; i += 4) {
             if (y == i) {
                 return true;
             }
