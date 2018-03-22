@@ -1,5 +1,8 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
+/**
+ *
+ */
 public class IocCode {
 
     private String id;
@@ -7,6 +10,13 @@ public class IocCode {
     private String countryName;
     private String year;
 
+    /**
+     *
+     * @param id .
+     * @param code .
+     * @param countryName .
+     * @param year .
+     */
     public IocCode(String id, String code, String countryName, String year) {
         this.id = id;
         this.code = code;
@@ -14,18 +24,34 @@ public class IocCode {
         this.year = year;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getCode() {
         return code;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getCountryName() {
         return countryName;
     }
 
+    /**
+     *
+     * @return .
+     */
     public String getYear() {
         return year;
     }

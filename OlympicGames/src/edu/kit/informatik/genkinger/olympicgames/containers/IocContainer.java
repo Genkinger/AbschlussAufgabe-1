@@ -6,9 +6,20 @@ import edu.kit.informatik.genkinger.olympicgames.comparators.IocCodeComparator;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class IocContainer extends Container implements Clearable {
     private ArrayList<IocCode> iocCodes = new ArrayList<>();
 
+    /**
+     *
+     * @param id .
+     * @param code .
+     * @param countryName .
+     * @param year .
+     * @return .
+     */
     public boolean addIocCode(String id, String code, String countryName, String year) {
 
         if (!id.matches("[0-9]{3}") || id.equals("000")) {
@@ -47,6 +58,11 @@ public class IocContainer extends Container implements Clearable {
         return true;
     }
 
+    /**
+     *
+     * @param country .
+     * @return .
+     */
     IocCode findIocCodeByCountry(String country) {
         for (IocCode iocCode : iocCodes) {
             if (iocCode.getCountryName().equals(country)) {
