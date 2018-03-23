@@ -1,6 +1,7 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
 /**
+ *  This class represents a user that has permission to alter entries in the {@link OlympicManagement} system.
  *
  */
 public class Admin extends Person {
@@ -9,11 +10,12 @@ public class Admin extends Person {
     private String password;
 
     /**
+     * Constructs a new {@link Admin} object.
      *
-     * @param firstName .
-     * @param lastName .
-     * @param username .
-     * @param password .
+     * @param firstName the first name of the user
+     * @param lastName  the last name of the user
+     * @param username  the username of the user
+     * @param password  the password of the user
      */
     public Admin(String firstName, String lastName, String username, String password) {
         super(firstName, lastName);
@@ -22,16 +24,16 @@ public class Admin extends Person {
     }
 
     /**
-     *
-     * @return .
+     * Returns the username
+     * @return the username
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     *
-     * @return .
+     * Returns the password
+     * @return the password
      */
     public String getPassword() {
         return password;

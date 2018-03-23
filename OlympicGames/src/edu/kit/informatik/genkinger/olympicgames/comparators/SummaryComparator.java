@@ -5,6 +5,9 @@ import edu.kit.informatik.genkinger.olympicgames.Medals;
 
 import java.util.Comparator;
 
+/**
+ * Comparator for {@link CountrySummary} objects.
+ */
 public class SummaryComparator implements Comparator<CountrySummary> {
 
     @Override

@@ -7,18 +7,20 @@ import edu.kit.informatik.genkinger.olympicgames.comparators.IocCodeComparator;
 import java.util.ArrayList;
 
 /**
- *
+ * This class is a {@link Container} of {@link IocCode} objects.
  */
 public class IocContainer extends Container implements Clearable {
     private ArrayList<IocCode> iocCodes = new ArrayList<>();
 
     /**
+     * Adds a new {@link IocCode} to the {@link Container}.
      *
-     * @param id .
-     * @param code .
-     * @param countryName .
-     * @param year .
-     * @return .
+     * @param id          the id of the {@link IocCode}.
+     * @param code        the shorthand code for the country represented by the {@link IocCode}.
+     * @param countryName the country name.
+     * @param year        the year the {@link IocCode} was created.
+     * @return <code>true</code> if no errors occurred.
+     * <code>false</code> otherwise.
      */
     public boolean addIocCode(String id, String code, String countryName, String year) {
 
@@ -59,9 +61,11 @@ public class IocContainer extends Container implements Clearable {
     }
 
     /**
+     * Returns the {@link IocCode} of the specified country if it is found in the {@link IocContainer}.
      *
-     * @param country .
-     * @return .
+     * @param country the name of the country.
+     * @return the {@link IocCode} of the specified country if it is found in the {@link IocContainer}.
+     * <code>null</code> otherwise.
      */
     IocCode findIocCodeByCountry(String country) {
         for (IocCode iocCode : iocCodes) {

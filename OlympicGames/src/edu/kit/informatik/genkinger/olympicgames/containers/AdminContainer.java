@@ -7,19 +7,21 @@ import edu.kit.informatik.genkinger.olympicgames.Clearable;
 import java.util.ArrayList;
 
 /**
- *
+ * This class is a {@link Container} of {@link Admin} objects.
  */
 public class AdminContainer extends Container implements Clearable {
     private ArrayList<Admin> admins = new ArrayList<>();
     private boolean loggedIn = false;
 
     /**
+     * Adds an {@link Admin} to the {@link Container}.
      *
-     * @param firstName .
-     * @param lastName .
-     * @param username .
-     * @param password .
-     * @return .
+     * @param firstName the first name of the admin.
+     * @param lastName  the last name of the admin.
+     * @param username  the username of the admin.
+     * @param password  the password of the admin.
+     * @return <code>true</code> if no errors occurred.
+     * <code>false</code> otherwise.
      */
     public boolean addAdmin(String firstName, String lastName, String username, String password) {
         if (findByUsername(username) != null) {
@@ -44,10 +46,12 @@ public class AdminContainer extends Container implements Clearable {
     }
 
     /**
+     * Attempts a login.
      *
-     * @param username .
-     * @param password .
-     * @return .
+     * @param username the username of the {@link Admin} to login.
+     * @param password the password of the {@link Admin} to login.
+     * @return <code>true</code> if no errors occurred.
+     * <code>false</code> otherwise.
      */
     public boolean loginAdmin(String username, String password) {
         Admin admin = findByUsername(username);
@@ -71,8 +75,10 @@ public class AdminContainer extends Container implements Clearable {
     }
 
     /**
+     * Attempts to log out an {@link Admin} that is currently logged in.
      *
-     * @return .
+     * @return <code>true</code> if no errors occurred.
+     * <code>false</code> otherwise.
      */
     public boolean logoutAdmin() {
 
@@ -86,19 +92,17 @@ public class AdminContainer extends Container implements Clearable {
     }
 
     /**
+     * Returns <code>true</code> if an {@link Admin} is currently logged in.
+     * <code>false</code> otherwise.
      *
-     * @return .
+     * @return <code>true</code> if an {@link Admin} is currently logged in.
+     * <code>false</code> otherwise.
      */
     public boolean isLoggedIn() {
         return loggedIn;
     }
 
-    /**
-     *
-     * @param username .
-     * @return .
-     */
-    Admin findByUsername(String username) {
+    private Admin findByUsername(String username) {
         for (Admin admin : admins) {
             if (admin.getUsername().equals(username)) {
                 return admin;

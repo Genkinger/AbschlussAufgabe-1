@@ -1,7 +1,7 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
 /**
- *
+ * This class represents a {@link Person}.
  */
 public class Person {
 
@@ -9,28 +9,31 @@ public class Person {
     private String lastName;
 
     /**
+     * Constructs a {@link Person} with the specified <code>firstName</code> and <code>lastName</code>.
      *
-     * @param firstName .
-     * @param lastName .
+     * @param firstName the first name.
+     * @param lastName  the last name.
      */
-    public Person(String firstName, String lastName) {
+    Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     /**
+     * Returns the {@link Person}s first name.
      *
-     * @return .
+     * @return the first name
      */
     public String getFirstName() {
         return firstName;
     }
 
     /**
+     * Returns the {@link Person}s last name.
      *
-     * @return .
+     * @return the last name
      */
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
 

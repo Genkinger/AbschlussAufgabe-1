@@ -4,6 +4,9 @@ import edu.kit.informatik.genkinger.olympicgames.Venue;
 
 import java.util.Comparator;
 
+/**
+ * Comparator for {@link Venue}s.
+ */
 public class VenueComparator implements Comparator<Venue> {
     @Override
     public int compare(Venue o1, Venue o2) {

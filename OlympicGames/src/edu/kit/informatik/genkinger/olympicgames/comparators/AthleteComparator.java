@@ -4,6 +4,9 @@ import edu.kit.informatik.genkinger.olympicgames.Athlete;
 
 import java.util.Comparator;
 
+/**
+ * Comparator for {@link Athlete}s.
+ */
 public class AthleteComparator implements Comparator<Athlete> {
     @Override
     public int compare(Athlete o1, Athlete o2) {

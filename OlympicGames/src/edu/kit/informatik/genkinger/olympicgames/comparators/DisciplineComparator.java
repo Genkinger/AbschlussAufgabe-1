@@ -4,6 +4,9 @@ import edu.kit.informatik.genkinger.olympicgames.Discipline;
 
 import java.util.Comparator;
 
+/**
+ * Comparator for {@link Discipline}s.
+ */
 public class DisciplineComparator implements Comparator<Discipline> {
     @Override
     public int compare(Discipline o1, Discipline o2) {

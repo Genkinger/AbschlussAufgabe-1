@@ -1,16 +1,21 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
 /**
- *
+ * This class represents a summary of the Medals
+ * won by {@link Athlete}s of the Country specified by the {@link IocCode}.
+ * @see Athlete
+ * @see IocCode
  */
 public class CountrySummary {
     private IocCode iocCode;
     private Medals medals;
 
     /**
+     * Constructs a new {@link CountrySummary}.
      *
-     * @param iocCode .
-     * @param medals .
+     * @param iocCode the {@link IocCode}
+     * @param medals  the {@link Medals} that were won by
+     *                {@link Athlete}s competing for the country specified by the {@link IocCode}.
      */
     CountrySummary(IocCode iocCode, Medals medals) {
         this.iocCode = iocCode;
@@ -18,36 +23,24 @@ public class CountrySummary {
     }
 
     /**
+     * Returns the {@link IocCode}.
      *
-     * @return .
+     * @return the {@link IocCode}.
      */
     public IocCode getIocCode() {
         return iocCode;
     }
 
-    /**
-     *
-     * @param iocCode .
-     */
-    public void setIocCode(IocCode iocCode) {
-        this.iocCode = iocCode;
-    }
 
     /**
+     * Returns the {@link Medals}.
      *
-     * @return .
+     * @return the {@link Medals}.
      */
     public Medals getMedals() {
         return medals;
     }
 
-    /**
-     *
-     * @param medals .
-     */
-    public void setMedals(Medals medals) {
-        this.medals = medals;
-    }
 
     @Override
     public String toString() {

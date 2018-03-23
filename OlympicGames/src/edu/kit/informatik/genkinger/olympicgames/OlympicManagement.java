@@ -6,9 +6,14 @@ import edu.kit.informatik.genkinger.olympicgames.containers.*;
 import java.util.ArrayList;
 
 /**
+ * This class represents the {@link OlympicManagement} system.
+ * It uses a {@link StringInputController} to get user input and executes methods accordingly.
  *
+ * @see StringInputController
+ * @see StringInputInterface
+ * @see StringOutputInterface
  */
-public class OlympicGames {
+class OlympicManagement {
 
 
     private AdminContainer adminContainer = new AdminContainer();
@@ -397,10 +402,12 @@ public class OlympicGames {
 
 
     /**
-     * @param inputInterface  .
-     * @param outputInterface .
+     * Constructs a new {@link OlympicManagement} object.
+     *
+     * @param inputInterface  the {@link StringInputInterface} the {@link StringInputController} uses.
+     * @param outputInterface the {@link StringOutputInterface} used to output info to the user.
      */
-    OlympicGames(StringInputInterface inputInterface, StringOutputInterface outputInterface) {
+    OlympicManagement(StringInputInterface inputInterface, StringOutputInterface outputInterface) {
         this.outputInterface = outputInterface;
         this.controller = new StringInputController(inputInterface);
 
@@ -417,7 +424,7 @@ public class OlympicGames {
     }
 
     /**
-     *
+     * Starts the associated {@link StringInputController}.
      */
     public void start() {
         controller.start();

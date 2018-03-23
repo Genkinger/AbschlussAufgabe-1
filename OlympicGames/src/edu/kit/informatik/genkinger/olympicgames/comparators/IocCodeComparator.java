@@ -4,6 +4,9 @@ import edu.kit.informatik.genkinger.olympicgames.IocCode;
 
 import java.util.Comparator;
 
+/**
+ * Comparator for {@link IocCode}s.
+ */
 public class IocCodeComparator implements Comparator<IocCode> {
     @Override
     public int compare(IocCode o1, IocCode o2) {

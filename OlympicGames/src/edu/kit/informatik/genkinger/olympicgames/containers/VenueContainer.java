@@ -8,7 +8,7 @@ import edu.kit.informatik.genkinger.olympicgames.comparators.VenueComparator;
 import java.util.ArrayList;
 
 /**
- *
+ * This class is a {@link Container} of {@link Venue} objects.
  */
 public class VenueContainer extends Container implements Clearable {
 
@@ -16,19 +16,23 @@ public class VenueContainer extends Container implements Clearable {
     private ArrayList<Venue> venues = new ArrayList<>();
 
     /**
-     * @param iocContainer .
+     * Constructs a new {@link VenueContainer}.
+     *
+     * @param iocContainer the {@link IocContainer}.
      */
     public VenueContainer(IocContainer iocContainer) {
         this.iocContainer = iocContainer;
     }
 
     /**
-     * @param id             .
-     * @param country        .
-     * @param locus          .
-     * @param name           .
-     * @param openingYear    .
-     * @param spectatorCount .
+     * Adds a new {@link Venue} to the {@link Container}.
+     *
+     * @param id             the id of the {@link Venue}.
+     * @param country        the name of the country the {@link Venue} is located in.
+     * @param locus          the name of the locus the {@link Venue} is located in.
+     * @param name           the name of the {@link Venue}.
+     * @param openingYear    the opening year of the {@link Venue}.
+     * @param spectatorCount the maximum number of spectators the {@link Venue} can hold.
      * @return .
      */
     public boolean addVenue(String id, String country,
@@ -88,8 +92,10 @@ public class VenueContainer extends Container implements Clearable {
     }
 
     /**
-     * @param country .
-     * @return .
+     * returns an {@link ArrayList} containing the Venues located in the specified country.
+     *
+     * @param country the name of the country
+     * @return an {@link ArrayList} containing the Venues located in the specified country.
      */
     public ArrayList<Venue> findVenuesByCountry(String country) {
         if (iocContainer.findIocCodeByCountry(country) == null) {

@@ -1,7 +1,8 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
 /**
- *
+ * This class represents a medal distribution.
+ * It consists of the gold, silver and bronze medal count.
  */
 public class Medals {
 
@@ -10,20 +11,22 @@ public class Medals {
     private int bronze;
 
     /**
+     * Constructs a new Medal distribution.
      *
-     * @param gold .
-     * @param silver .
-     * @param bronze .
+     * @param gold   the count of gold medals.
+     * @param silver the count of silver medals.
+     * @param bronze the count of bronze medals.
      */
-    public Medals(int gold, int silver, int bronze) {
+    Medals(int gold, int silver, int bronze) {
         this.gold = gold;
         this.silver = silver;
         this.bronze = bronze;
     }
 
     /**
+     * Adds another medal distribution to the current one.
      *
-     * @param medals .
+     * @param medals the medal distribution to add.
      */
     public void add(Medals medals) {
         gold += medals.getGold();
@@ -32,51 +35,30 @@ public class Medals {
     }
 
     /**
+     * Returns the gold medal count.
      *
-     * @return .
+     * @return the gold medal count.
      */
     public int getGold() {
         return gold;
     }
 
     /**
+     * Returns the silver medal count.
      *
-     * @return .
+     * @return the silver medal count.
      */
     public int getSilver() {
         return silver;
     }
 
     /**
+     * Returns the bronze medal count.
      *
-     * @return .
+     * @return the bronze medal count.
      */
     public int getBronze() {
         return bronze;
-    }
-
-    /**
-     *
-     * @param gold .
-     */
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
-
-    /**
-     *
-     * @param silver .
-     */
-    public void setSilver(int silver) {
-        this.silver = silver;
-    }
-
-    /**
-     *
-     * @param bronze .
-     */
-    public void setBronze(int bronze) {
-        this.bronze = bronze;
     }
 
     @Override

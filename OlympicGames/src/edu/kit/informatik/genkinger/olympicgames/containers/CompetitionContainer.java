@@ -5,7 +5,7 @@ import edu.kit.informatik.genkinger.olympicgames.*;
 import java.util.ArrayList;
 
 /**
- *
+ * This class is a {@link Container} of {@link Competition} objects.
  */
 public class CompetitionContainer extends Container implements Clearable {
     private AthleteContainer athleteContainer;
@@ -16,10 +16,12 @@ public class CompetitionContainer extends Container implements Clearable {
     private ArrayList<Competition> competitions = new ArrayList<>();
 
     /**
-     * @param athleteContainer .
-     * @param iocContainer     .
-     * @param sportContainer   .
-     * @param medalTable       .
+     * Constructs a new {@link CompetitionContainer}.
+     *
+     * @param athleteContainer the {@link AthleteContainer}.
+     * @param iocContainer     the {@link IocContainer}.
+     * @param sportContainer   the {@link SportContainer}.
+     * @param medalTable       the {@link MedalTable}.
      */
     public CompetitionContainer(AthleteContainer athleteContainer, IocContainer iocContainer,
                                 SportContainer sportContainer, MedalTable medalTable) {
@@ -30,13 +32,16 @@ public class CompetitionContainer extends Container implements Clearable {
     }
 
     /**
-     * @param athleteId  .
-     * @param year       .
-     * @param country    .
-     * @param sport      .
-     * @param discipline .
-     * @param medals     .
-     * @return .
+     * Adds a new {@link Competition} to the {@link Container}.
+     *
+     * @param athleteId  the id of the Athlete
+     * @param year       the year of the competiton.
+     * @param country    the country of the athlete.
+     * @param sport      the sport.
+     * @param discipline the discipline.
+     * @param medals     the medals won in the competition.
+     * @return <code>true</code> if no errors occurred.
+     * <code>false</code> otherwise.
      */
     public boolean addCompetition(String athleteId, String year,
                                   String country, String sport,

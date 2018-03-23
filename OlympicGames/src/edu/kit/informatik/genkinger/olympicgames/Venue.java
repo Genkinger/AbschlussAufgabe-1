@@ -1,7 +1,7 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
 /**
- *
+ * This class represents a sports venue in a specified country represented by the {@link IocCode}.
  */
 public class Venue {
 
@@ -14,13 +14,14 @@ public class Venue {
 
 
     /**
+     * Constructs a new {@link Venue} object.
      *
-     * @param id .
-     * @param iocCode .
-     * @param locus .
-     * @param name .
-     * @param year .
-     * @param spectatorCount .
+     * @param id             the id of the {@link Venue}
+     * @param iocCode        the {@link IocCode} of the country the {@link Venue} is located in.
+     * @param locus          the locus of the {@link Venue}.
+     * @param name           the name of the {@link Venue}.
+     * @param year           the year the {@link Venue} was opened.
+     * @param spectatorCount the maximum number of spectators the {@link Venue} can hold.
      */
     public Venue(String id, IocCode iocCode, String locus, String name, String year, int spectatorCount) {
         this.id = id;
@@ -32,48 +33,45 @@ public class Venue {
     }
 
     /**
+     * Returns the id.
      *
-     * @return .
+     * @return the id.
      */
     public String getId() {
         return id;
     }
 
     /**
+     * Returns the {@link IocCode}.
      *
-     * @return .
+     * @return the {@link IocCode}.
      */
     public IocCode getIocCode() {
         return iocCode;
     }
 
     /**
+     * Returns the locus of the {@link Venue}.
      *
-     * @return .
+     * @return the locus of the {@link Venue}.
      */
     public String getLocus() {
         return locus;
     }
 
     /**
+     * Returns the name of the {@link Venue}.
      *
-     * @return .
+     * @return the name of the {@link Venue}.
      */
     public String getName() {
         return name;
     }
 
     /**
+     * Returns the spectator count.
      *
-     * @return .
-     */
-    public String getYear() {
-        return year;
-    }
-
-    /**
-     *
-     * @return .
+     * @return the spectator count.
      */
     public int getSpectatorCount() {
         return spectatorCount;

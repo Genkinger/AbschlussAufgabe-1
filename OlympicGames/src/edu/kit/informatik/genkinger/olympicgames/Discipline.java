@@ -1,7 +1,8 @@
 package edu.kit.informatik.genkinger.olympicgames;
 
 /**
- *
+ * This class represents a {@link Discipline} of a {@link Sport}
+ * @see Sport
  */
 public class Discipline {
 
@@ -9,16 +10,18 @@ public class Discipline {
 
 
     /**
+     * Constructs a new {@link Discipline} by name.
      *
-     * @param name .
+     * @param name the name of the {@link Discipline}.
      */
     Discipline(String name) {
         this.name = name;
     }
 
     /**
+     * Returns the name of the {@link Discipline}.
      *
-     * @return .
+     * @return the name of the {@link Discipline}.
      */
     public String getName() {
         return name;

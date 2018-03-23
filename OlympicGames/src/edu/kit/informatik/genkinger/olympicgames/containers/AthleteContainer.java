@@ -6,7 +6,7 @@ import edu.kit.informatik.genkinger.olympicgames.comparators.AthleteComparator;
 import java.util.ArrayList;
 
 /**
- *
+ * This class is a {@link Container} of {@link Athlete} objects.
  */
 public class AthleteContainer extends Container implements Clearable {
     private ArrayList<Athlete> athletes = new ArrayList<>();
