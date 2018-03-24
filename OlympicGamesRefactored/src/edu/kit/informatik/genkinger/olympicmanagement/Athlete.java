@@ -2,6 +2,8 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * This class represents an Athlete that takes part in the olympic games.
+ *
+ * @author Lukas Genkinger
  */
 public class Athlete extends Person {
 

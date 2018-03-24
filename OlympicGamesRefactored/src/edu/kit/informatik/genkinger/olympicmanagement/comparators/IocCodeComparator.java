@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 /**
  * Comparator for {@link IocCode}s.
+ *
+ * @author Lukas Genkinger
  */
 public class IocCodeComparator implements Comparator<IocCode> {
     @Override

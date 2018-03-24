@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * This class is used as a base for other Container classes that need similar functionality.
- * (error strings)
+ * This class represents a {@link Container} for various objects.
+ * It defines common functionality like adding elements or sorting.
+ *
+ * @author Lukas Genkinger
+ * @see OlympicManagement
  */
 public class Container<T> extends Invalidatable {
     private ArrayList<T> list = new ArrayList<>();

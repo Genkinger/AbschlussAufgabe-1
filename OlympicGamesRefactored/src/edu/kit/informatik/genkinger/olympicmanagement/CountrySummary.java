@@ -4,6 +4,7 @@ package edu.kit.informatik.genkinger.olympicmanagement;
  * This class represents a summary of the Medals
  * won by {@link Athlete}s of the Country specified by the {@link IocCode}.
  *
+ * @author Lukas Genkinger
  * @see Athlete
  * @see IocCode
  */

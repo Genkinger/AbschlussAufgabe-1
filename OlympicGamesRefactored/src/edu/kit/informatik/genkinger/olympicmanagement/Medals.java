@@ -3,6 +3,7 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 /**
  * This class represents a medal distribution.
  * It consists of the gold, silver and bronze medal count.
+ * @author Lukas Genkinger
  */
 public class Medals extends Invalidatable {
 

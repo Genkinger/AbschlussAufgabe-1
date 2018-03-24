@@ -2,6 +2,7 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * This class represents a {@link Discipline}.
+ * @author Lukas Genkinger
  */
 
 public class Discipline extends Invalidatable {

@@ -5,6 +5,7 @@ package edu.kit.informatik.genkinger.olympicmanagement;
  * to determine if an element needs to be printed.
  *
  * @param <T> the type of element to be printed.
+ * @author Lukas Genkinger
  */
 public interface Predicate<T> {
     /**

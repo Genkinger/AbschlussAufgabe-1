@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 /**
  * Comparator for {@link Athlete}s.
+ *
+ * @author Lukas Genkinger
  */
 public class AthleteComparator implements Comparator<Athlete> {
     @Override

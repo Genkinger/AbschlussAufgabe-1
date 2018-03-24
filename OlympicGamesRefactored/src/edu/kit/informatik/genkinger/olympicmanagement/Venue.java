@@ -2,6 +2,8 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * This class represents a sports venue in a specified country represented by the {@link IocCode}.
+ *
+ * @author Lukas Genkinger
  */
 public class Venue extends Invalidatable {
 

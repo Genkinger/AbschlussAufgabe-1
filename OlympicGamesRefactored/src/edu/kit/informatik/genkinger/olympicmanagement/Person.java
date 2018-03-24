@@ -2,6 +2,7 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * This class represents a {@link Person}.
+ * @author Lukas Genkinger
  */
 class Person extends Invalidatable {
 

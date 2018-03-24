@@ -2,6 +2,7 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * The class representing an {@link IocCode}.
+ * @author Lukas Genkinger
  */
 public class IocCode extends Invalidatable {
 

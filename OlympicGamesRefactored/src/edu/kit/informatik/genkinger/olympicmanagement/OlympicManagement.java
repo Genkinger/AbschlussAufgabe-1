@@ -7,6 +7,7 @@ import edu.kit.informatik.genkinger.olympicmanagement.comparators.*;
  * This class represents the {@link OlympicManagement} system.
  * It uses a {@link StringInputController} to get user input and executes methods accordingly.
  *
+ * @author Lukas Genkinger
  * @see StringInputController
  * @see StringInputInterface
  * @see StringOutputInterface

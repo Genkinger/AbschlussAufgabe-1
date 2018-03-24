@@ -7,6 +7,8 @@ import java.util.Comparator;
 
 /**
  * Comparator for {@link Venue}s.
+ *
+ * @author Lukas Genkinger
  */
 public class VenueComparator implements Comparator<Venue> {
     @Override

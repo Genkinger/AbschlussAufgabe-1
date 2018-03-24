@@ -2,6 +2,7 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * This class represents an object that can be invalidated.
+ * @author Lukas Genkinger
  */
 public abstract class Invalidatable {
     private String reason = null;

@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 /**
  * Comparator for {@link Discipline}s.
+ *
+ * @author Lukas Genkinger
  */
 public class DisciplineComparator implements Comparator<Discipline> {
     @Override

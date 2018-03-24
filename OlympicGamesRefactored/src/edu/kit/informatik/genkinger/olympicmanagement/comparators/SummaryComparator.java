@@ -7,6 +7,8 @@ import java.util.Comparator;
 
 /**
  * Comparator for {@link CountrySummary} objects.
+ *
+ * @author Lukas Genkinger
  */
 public class SummaryComparator implements Comparator<CountrySummary> {
 

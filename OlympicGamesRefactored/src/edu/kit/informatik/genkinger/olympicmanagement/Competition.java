@@ -3,8 +3,10 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * This class represents the end result of a {@link Competition} in the olympic games.
+ *
+ * @author Lukas Genkinger
  */
-public class Competition extends Invalidatable {
+class Competition extends Invalidatable {
 
     private Athlete athlete;
     private String year;

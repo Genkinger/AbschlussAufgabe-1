@@ -2,6 +2,8 @@ package edu.kit.informatik.genkinger.olympicmanagement;
 
 /**
  * This class represents a user that has permission to alter entries in the {@link OlympicManagement} system.
+ *
+ * @author Lukas Genkinger
  */
 public class Admin extends Person {
 
