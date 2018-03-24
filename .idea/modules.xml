@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/ConnectSix/ConnectSix.iml" filepath="$PROJECT_DIR$/ConnectSix/ConnectSix.iml" />
       <module fileurl="file://$PROJECT_DIR$/InputParser/InputParser.iml" filepath="$PROJECT_DIR$/InputParser/InputParser.iml" />
       <module fileurl="file://$PROJECT_DIR$/OlympicGames/OlympicGames.iml" filepath="$PROJECT_DIR$/OlympicGames/OlympicGames.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OlympicGamesRefactored/OlympicGamesRefactored.iml" filepath="$PROJECT_DIR$/OlympicGamesRefactored/OlympicGamesRefactored.iml" />
     </modules>
   </component>
 </project>
