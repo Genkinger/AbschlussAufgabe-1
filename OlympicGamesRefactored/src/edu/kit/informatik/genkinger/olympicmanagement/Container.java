@@ -9,14 +9,14 @@ import java.util.Comparator;
  */
 public class Container<T> extends Invalidatable {
     private ArrayList<T> list = new ArrayList<>();
-    private Comparator comparator = null;
+    private Comparator<T> comparator = null;
 
     /**
      * Constructs a new {@link Container} with a comparator that is used to sort the internal collection.
      *
      * @param comparator the comparator to use.
      */
-    Container(Comparator comparator) {
+    Container(Comparator<T> comparator) {
         this.comparator = comparator;
     }
 

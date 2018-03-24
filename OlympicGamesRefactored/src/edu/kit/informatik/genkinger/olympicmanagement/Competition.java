@@ -1,5 +1,6 @@
 package edu.kit.informatik.genkinger.olympicmanagement;
 
+
 /**
  * This class represents the end result of a {@link Competition} in the olympic games.
  */
@@ -39,7 +40,7 @@ public class Competition extends Invalidatable {
      *
      * @return the {@link Athlete}
      */
-    public Athlete getAthlete() {
+    Athlete getAthlete() {
         return athlete;
     }
 
@@ -48,7 +49,7 @@ public class Competition extends Invalidatable {
      *
      * @return the year.
      */
-    public String getYear() {
+    String getYear() {
         return year;
     }
 
@@ -57,7 +58,7 @@ public class Competition extends Invalidatable {
      *
      * @return the {@link IocCode}.
      */
-    public IocCode getIocCode() {
+    IocCode getIocCode() {
         return iocCode;
     }
 
@@ -66,7 +67,7 @@ public class Competition extends Invalidatable {
      *
      * @return the {@link Discipline}.
      */
-    public Discipline getDiscipline() {
+    Discipline getDiscipline() {
         return discipline;
     }
 
@@ -88,6 +89,18 @@ public class Competition extends Invalidatable {
             if (y == i) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Competition) {
+            Competition competition = (Competition) obj;
+            return (competition.getAthlete().equals(athlete)
+                    && competition.getDiscipline().equals(discipline)
+                    && competition.getIocCode().equals(iocCode)
+                    && competition.getYear().equals(year));
         }
         return false;
     }
